@@ -40,9 +40,9 @@ namespace :vlad do
     Rake::Task["vlad:update"].invoke
     Rake::Task["vlad:symlink_config"].invoke
     Rake::Task["vlad:symlink_carrierwave"].invoke
+    Rake::Task["vlad:maintenance:on"].invoke
     Rake::Task["vlad:bundle:install"].invoke
     Rake::Task["vlad:precompile"].invoke
-    Rake::Task["vlad:maintenance:on"].invoke
     Rake::Task["vlad:migrate"].invoke
     Rake::Task["vlad:start_app"].invoke
     Rake::Task["vlad:maintenance:off"].invoke

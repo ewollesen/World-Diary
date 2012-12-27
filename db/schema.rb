@@ -16,6 +16,10 @@ ActiveRecord::Schema.define(:version => 20121227055654) do
   create_table "attachments", :force => true do |t|
     t.integer "subject_id"
     t.string  "attachment"
+    t.string  "content_type"
+    t.integer "file_size"
+    t.integer "width"
+    t.integer "height"
   end
 
   create_table "subjects", :force => true do |t|

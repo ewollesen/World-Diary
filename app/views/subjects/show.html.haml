@@ -9,10 +9,15 @@
   - @subject.attachments.each do |attachment|
     - if attachment == @subject.attachments.first
       %h4 Attachments
-    .pull-right
-      = link_to(attachment.attachment.url) do
+    = link_to(attachment.attachment.url) do
+      - if attachment.image? # TODO set default url
         = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
-      = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
+      - else
+        %i.icon-file  
+      %span<>
+        = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
+    = attachment_metadata(attachment)
+
     - unless attachment == @subject.attachments.last
       %div{style: "margin-top: 4px"}  
 = content_for(:sidebar) do

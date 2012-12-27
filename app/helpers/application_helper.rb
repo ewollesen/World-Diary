@@ -27,4 +27,25 @@ module ApplicationHelper
     content_tag("i", "", :class => "icon-lock").html_safe
   end
 
+  def attachment_metadata(attachment)
+    bits = []
+
+    content_tag("span", :class => "muted") do
+      if attachment.file_size
+        bits << number_to_human_size(attachment.file_size)
+      end
+
+      if attachment.width && attachment.height
+        bits << "#{attachment.width}&times;#{attachment.height}"
+      end
+
+      if attachment.content_type
+        bits << attachment.content_type
+      end
+
+      bits.join(", ").html_safe
+    end
+
+  end
+
 end
