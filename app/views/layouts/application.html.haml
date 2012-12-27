@@ -10,11 +10,7 @@
     /[if lt IE 9]
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"
     = stylesheet_link_tag "application", :media => "all"
-    %link(href="images/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144")
-    %link(href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114")
-    %link(href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72")
-    %link(href="images/apple-touch-icon.png" rel="apple-touch-icon-precomposed")
-    %link(href="images/favicon.ico" rel="shortcut icon")
+    %link{href: "/favicon.ico", rel: "shortcut icon"}
 
 
   %body
@@ -40,12 +36,19 @@
                     = current_user.first_name
                     = current_user.last_name
                   %li{class: active_link_class(destroy_user_session_path)}
-                    = link_to "Sign Out", destroy_user_session_path, :method => :delete
+                    = link_to(destroy_user_session_path,
+                              :method => :delete) do
+                      %i.icon-signout
+                      Sign Out
                 - else
                   %li{class: active_link_class(new_user_session_path)}
-                    = link_to "Sign In", new_user_session_path
+                    = link_to(new_user_session_path) do
+                      %i.icon-signin
+                      Sign In
                   %li{class: active_link_class(new_user_registration_path)}
-                    = link_to "Sign Up", new_user_registration_path
+                    = link_to(new_user_registration_path) do
+                      %i.icon-plus-sign
+                      Sign Up
 
     .container
 

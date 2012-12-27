@@ -15,4 +15,6 @@
   %ul.nav.nav-tabs.nav-stacked
     - if can?(:create, Subject)
       %li
-        = link_to("New", new_subject_path)
+        = link_to(new_subject_path) do
+          %i.icon-plus
+          New

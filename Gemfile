@@ -5,11 +5,12 @@ gem "rails", "3.2.9"
 gem "cancan"
 gem "devise"
 gem "haml-rails"
+gem "nokogiri"
 gem "pg"
 gem "redcarpet"
 gem "twitter-bootstrap-rails"
   gem "less-rails" # am I needed in production?
-gem "world_wiki", :path => "../world_wiki"
+gem "world_wiki", :git => "black.xmtp.net:/home/git/world_wiki.git"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -39,4 +40,6 @@ group :development, :test do
   gem "minitest-reporters"
   gem "pry"
   gem "pry-doc"
+  gem "vlad", :require => false
+  gem "vlad-git", :require => false
 end

@@ -6,11 +6,17 @@
 = render_wiki(@subject.text)
 
 = content_for(:sidebar) do
-  %ul.nav.nav-tabs.nav-stacked
-    - if can?(:update, Subject)
-      %li
-        = link_to("Edit", edit_subject_path(@subject))
-    - if can?(:destroy, Subject)
-      %li
-        = link_to("Delete", subject_path(@subject),
-                  :method => :delete, :confirm => "Are you sure?")
+  - if can?(:update, Subject) || can?(:destroy, Subject)
+    %h4 Actions
+    %ul.nav.nav-tabs.nav-stacked
+      - if can?(:update, Subject)
+        %li
+          = link_to(edit_subject_path(@subject)) do
+            %i.icon-pencil
+            Edit
+      - if can?(:destroy, Subject)
+        %li
+          = link_to(subject_path(@subject),
+                    :method => :delete, :confirm => "Are you sure?") do
+            %i.icon-remove
+            Delete
