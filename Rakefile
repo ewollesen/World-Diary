@@ -8,6 +8,7 @@ Wd::Application.load_tasks
 
 begin
   require "vlad"
+  require "vlad/maintenance"
   Vlad.load :scm => :git, :app => :passenger
 rescue LoadError
   # do nothing
