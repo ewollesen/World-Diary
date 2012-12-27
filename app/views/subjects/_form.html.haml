@@ -1,4 +1,4 @@
-= form_for @subject do |f|
+= form_for @subject, html: {multipart: true} do |f|
   .control-group
     = f.label :name, :class => 'control-label'
     .controls
@@ -17,6 +17,37 @@
       .controls
         = f.check_box :dm_only
       DM only
+  - @subject.attachments.each_with_index do |attachment, idx|
+    = f.fields_for :attachments, attachment do |ff|
+      .control-group
+        = ff.label :attachment, "Attachment", :class => "control-label"
+        .controls
+          .fileupload.fileupload-exists{"data-provides" => "fileupload"}
+            .input-append
+              .uneditable-input
+                %i.icon-file.fileupload-exists
+                %span.fileupload-preview
+                  = File.basename(ff.object.attachment.path)
+              %span.btn.btn-file
+                %span.fileupload-new Select file
+                %span.fileupload-exists Change
+                = ff.file_field :attachment
+                = ff.hidden_field :attachment_cache
+              %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"} Remove
+  = f.fields_for :attachments, @subject.attachments.new do |ff|
+    .control-group
+      = ff.label :attachment, "New Attachment", :class => "control-label"
+      .controls
+        .fileupload.fileupload-new{"data-provides" => "fileupload"}
+          .input-append
+            .uneditable-input
+              %i.icon-file.fileupload-exists
+              %span.fileupload-preview
+            %span.btn.btn-file
+              %span.fileupload-new Select file
+              %span.fileupload-exists Change
+              = ff.file_field :attachment
+            %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"} Remove
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), subjects_path, :class => 'btn'

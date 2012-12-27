@@ -29,10 +29,17 @@ namespace :vlad do
     end
   end
 
+  desc "Symlinks carrierwave files"
+  remote_task :symlink_carrierwave, :roles => :web do
+    run "[ -d #{shared_path}/uploads ] || mkdir -p #{shared_path}/uploads"
+    run "ln -fs #{shared_path}/uploads #{current_path}/public/uploads"
+  end
+
   desc "Full deployment cycle: Update, migrate, restart, cleanup"
   remote_task :deploy, :roles => :app do
     Rake::Task["vlad:update"].invoke
     Rake::Task["vlad:symlink_config"].invoke
+    Rake::Task["vlad:symlink_carrierwave"].invoke
     Rake::Task["vlad:bundle:install"].invoke
     Rake::Task["vlad:precompile"].invoke
     Rake::Task["vlad:maintenance:on"].invoke

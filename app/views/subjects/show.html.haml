@@ -6,6 +6,17 @@
 = render_wiki(@subject.text)
 
 = content_for(:sidebar) do
+  - @subject.attachments.each do |attachment|
+    - if attachment == @subject.attachments.first
+      %h4 Attachments
+    .pull-right
+      = link_to(attachment.attachment.url) do
+        = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
+      = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
+    - unless attachment == @subject.attachments.last
+      %div{style: "margin-top: 4px"}  
+= content_for(:sidebar) do
+
   - if can?(:update, Subject) || can?(:destroy, Subject)
     %h4 Actions
     %ul.nav.nav-tabs.nav-stacked

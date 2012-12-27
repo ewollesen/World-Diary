@@ -7,9 +7,13 @@ class Subject < ActiveRecord::Base
   validates :permalink, :uniqueness => true, :presence => true
   validates :text, :presence => true
 
-  attr_accessible :name, :text, :permalink, :dm_only
+  attr_accessible :name, :text, :permalink, :dm_only, :attachments_attributes
 
   class_attribute :specifier
+
+  has_many :attachments, :dependent => :destroy
+
+  accepts_nested_attributes_for :attachments, :allow_destroy => true
 
 
   def self.lookup(name, specifier=nil)
