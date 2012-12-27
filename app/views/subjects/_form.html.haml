@@ -1,0 +1,22 @@
+= form_for @subject do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .control-group
+    = f.label :text, :class => 'control-label'
+    .controls
+      = f.text_area :text, :class => 'text_area', :cols => 80, :rows => 24
+  - unless @subject.new_record?
+    .control-group
+      = f.label :permalink, :class => 'control-label'
+      .controls
+        = f.text_field :permalink, :class => 'text_field'
+  .control-group
+    %label.checkbox{for: "subject_dm_only"}
+      .controls
+        = f.check_box :dm_only
+      DM only
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), subjects_path, :class => 'btn'

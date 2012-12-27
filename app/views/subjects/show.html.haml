@@ -1,0 +1,14 @@
+.page-header
+  %h1.title
+    = @subject.name
+    = locked_icon if @subject.dm_only?
+
+= render_wiki(@subject.text)
+
+= content_for(:sidebar) do
+  %ul.nav.nav-tabs.nav-stacked
+    %li
+      = link_to("Edit", edit_subject_path(@subject))
+    %li
+      = link_to("Delete", subject_path(@subject),
+                :method => :delete, :confirm => "Are you sure?")
