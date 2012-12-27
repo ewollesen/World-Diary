@@ -40,7 +40,7 @@
                     = current_user.first_name
                     = current_user.last_name
                   %li{class: active_link_class(destroy_user_session_path)}
-                    = link_to "Sign Out", destroy_user_session_path
+                    = link_to "Sign Out", destroy_user_session_path, :method => :delete
                 - else
                   %li{class: active_link_class(new_user_session_path)}
                     = link_to "Sign In", new_user_session_path

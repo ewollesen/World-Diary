@@ -13,5 +13,6 @@
 
 = content_for(:sidebar) do
   %ul.nav.nav-tabs.nav-stacked
-    %li
-      = link_to("New", new_subject_path)
+    - if can?(:create, Subject)
+      %li
+        = link_to("New", new_subject_path)
