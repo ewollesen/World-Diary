@@ -29,11 +29,14 @@
                 %span.fileupload-preview
                   = File.basename(ff.object.attachment.path)
               %span.btn.btn-file
-                %span.fileupload-new Select file
-                %span.fileupload-exists Change
+                %span.fileupload-new
+                  Choose File
+                %span.fileupload-exists
+                  %i.icon-refresh
                 = ff.file_field :attachment
                 = ff.hidden_field :attachment_cache
-              %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"} Remove
+              %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"}
+                %strong.icon-remove
   = f.fields_for :attachments, @subject.attachments.new do |ff|
     .control-group
       = ff.label :attachment, "New Attachment", :class => "control-label"
@@ -44,10 +47,13 @@
               %i.icon-file.fileupload-exists
               %span.fileupload-preview
             %span.btn.btn-file
-              %span.fileupload-new Select file
-              %span.fileupload-exists Change
+              %span.fileupload-new
+                Choose File
+              %span.fileupload-exists
+                %i.icon-refresh
               = ff.file_field :attachment
-            %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"} Remove
+            %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"}
+              %i.icon-remove
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), subjects_path, :class => 'btn'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), @subject.new_record? ? subjects_path : @subject, :class => 'btn'

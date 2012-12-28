@@ -18,7 +18,10 @@ module ApplicationHelper
     toc = Redcarpet::Markdown.new(renderer).render(text)
     if toc.present?
       content_for(:sidebar) do
-        content_tag("h4", "Table of Contents") + toc.html_safe
+        content_tag("h4") do
+          "Table of Contents ".html_safe +
+            content_tag("i", "", class: "icon-list-ul")
+        end + toc.html_safe
       end
     end
   end
@@ -30,7 +33,7 @@ module ApplicationHelper
   def attachment_metadata(attachment)
     bits = []
 
-    content_tag("span", :class => "muted") do
+    content_tag("small", :class => "muted") do
       if attachment.file_size
         bits << number_to_human_size(attachment.file_size)
       end

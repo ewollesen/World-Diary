@@ -8,12 +8,12 @@
 = content_for(:sidebar) do
   - @subject.attachments.each do |attachment|
     - if attachment == @subject.attachments.first
-      %h4 Attachments
+      %h4
+        Attachments
+        %i.icon-paper-clip
     = link_to(attachment.attachment.url) do
       - if attachment.image? # TODO set default url
         = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
-      - else
-        %i.icon-file  
       %span<>
         = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
     = attachment_metadata(attachment)
@@ -23,7 +23,9 @@
 = content_for(:sidebar) do
 
   - if can?(:update, Subject) || can?(:destroy, Subject)
-    %h4 Actions
+    %h4
+      Actions
+      %i.icon-wrench
     %ul.nav.nav-tabs.nav-stacked
       - if can?(:update, Subject)
         %li
