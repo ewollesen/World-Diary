@@ -33,10 +33,11 @@
             .pull-right
               %ul.nav
                 - if user_signed_in?
-                  %li.navbar-text
-                    %i.icon-user
-                    = current_user.first_name
-                    = current_user.last_name
+                  %li
+                    = link_to(edit_user_registration_path) do
+                      %i.icon-user
+                      = current_user.first_name
+                      = current_user.last_name
                   %li{class: active_link_class(destroy_user_session_path)}
                     = link_to(destroy_user_session_path,
                               :method => :delete) do
