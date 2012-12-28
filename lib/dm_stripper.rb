@@ -18,16 +18,20 @@ module DmStripper
     doc = Nokogiri::XML::fragment(text)
     (doc/"dm").each do |n|
       if /[\r\n]/ === n
-        n.swap("<div class=\"dm\">#{n.to_xml}</div>")
+        renderer = Redcarpet::Render::XHTML.new
+        md_text = Redcarpet::Markdown.new(renderer).render(n.text).html_safe
+        n.swap("<div class=\"dm\">#{md_text}</div>")
       else
-        n.swap("<span class=\"dm\">#{n.content}</span>")
+        n.swap("<span class=\"dm\">#{n.text}</span>")
       end
     end
     (doc/"vp").each do |n|
       if /[\r\n]/ === n
-        n.swap("<div class=\"vp\">#{n.to_xml}</div>")
+        renderer = Redcarpet::Render::XHTML.new
+        md_text = Redcarpet::Markdown.new(renderer).render(n.text).html_safe
+        n.swap("<div class=\"vp\">#{md_text}</div>")
       else
-        n.swap("<span class=\"vp\">#{n.content}</span>")
+        n.swap("<span class=\"vp\">#{n.text}</span>")
       end
     end
     doc.to_xml
