@@ -22,7 +22,7 @@ class Subject < ActiveRecord::Base
     # if specifier && self.specifier
     #   s = s.where(:type => specifier_to_class(specifier))
     # end
-    s.first
+    s.first || dummy(name)
   end
 
   def to_param
@@ -30,11 +30,18 @@ class Subject < ActiveRecord::Base
   end
 
   def url
-    url_for(self)
+    new_record? ? new_subject_path(subject: {name: name}) : url_for(self)
   end
 
 
   # def self.specifier_to_class(specifier)
   #   self.specifier == specifier ? self.name : nil
   # end
+
+
+  private
+
+  def self.dummy(name)
+    Subject.new(name: name)
+  end
 end
