@@ -30,6 +30,11 @@
                 = link_to subjects_path, class: "halflings film" do
                   %i.icon-group
                   Subjects
+              - if user_signed_in? && (current_user.dm? || current_user.veil_passes.present?)
+                %li{class: active_link_class(veil_passes_path)}
+                  = link_to(veil_passes_path) do
+                    %i.icon-key
+                    Veil Passes
             .pull-right
               %ul.nav
                 - if user_signed_in?

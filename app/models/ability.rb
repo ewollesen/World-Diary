@@ -45,6 +45,7 @@ EOF
         subject.veil_passes.map(&:user_id).include?(user.id)
       end
       can :read, Subject, :dm_only => false
+      can :read, VeilPass, :user_id => user.id
     end
   end
 

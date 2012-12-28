@@ -1,0 +1,24 @@
+.page-header
+  %h1 Veil Passes
+
+%p
+  Veil passes allow you to see content that is otherwise restricted. Phrases,
+  paragraphs, or whole Subjects can be restriced by the DM.
+
+%p
+  .vp
+    Content which you are able to see due to a veil pass is indicated by a
+    yellow background. Please use caution when sharing restricted information
+    with other players.
+
+%h4
+  - unless current_user.dm?
+    #{current_user.name}'s
+  Veil Passes
+
+%ul
+  = list_of(@veil_passes) do |vp|
+    = link_to(vp.subject) do
+      = vp.subject.name
+    - if current_user.dm?
+      \- #{vp.user.name}
