@@ -17,43 +17,62 @@
       %label.checkbox{for: "subject_dm_only"}
         = f.check_box :dm_only
         DM only
-  - @subject.attachments.each_with_index do |attachment, idx|
-    = f.fields_for :attachments, attachment do |ff|
+  %fieldset
+    %legend Attachments
+    - @subject.attachments.each do |attachment|
+      = f.fields_for :attachments, attachment do |ff|
+        .control-group
+          = ff.label :attachment, "Attachment", :class => "control-label"
+          .controls
+            .fileupload.fileupload-exists{"data-provides" => "fileupload"}
+              .input-append
+                .uneditable-input
+                  %i.icon-file.fileupload-exists
+                  %span.fileupload-preview
+                    = File.basename(ff.object.attachment.path)
+                %span.btn.btn-file
+                  %span.fileupload-new
+                    Choose File
+                  %span.fileupload-exists
+                    %i.icon-refresh
+                  = ff.file_field :attachment
+                  = ff.hidden_field :attachment_cache
+                %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"}
+                  %strong.icon-remove
+    = f.fields_for :attachments, @subject.attachments.new do |ff|
       .control-group
-        = ff.label :attachment, "Attachment", :class => "control-label"
+        = ff.label :attachment, "New Attachment", :class => "control-label"
         .controls
-          .fileupload.fileupload-exists{"data-provides" => "fileupload"}
+          .fileupload.fileupload-new{"data-provides" => "fileupload"}
             .input-append
               .uneditable-input
                 %i.icon-file.fileupload-exists
                 %span.fileupload-preview
-                  = File.basename(ff.object.attachment.path)
               %span.btn.btn-file
                 %span.fileupload-new
                   Choose File
                 %span.fileupload-exists
                   %i.icon-refresh
                 = ff.file_field :attachment
-                = ff.hidden_field :attachment_cache
               %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"}
-                %strong.icon-remove
-  = f.fields_for :attachments, @subject.attachments.new do |ff|
-    .control-group
-      = ff.label :attachment, "New Attachment", :class => "control-label"
-      .controls
-        .fileupload.fileupload-new{"data-provides" => "fileupload"}
-          .input-append
-            .uneditable-input
-              %i.icon-file.fileupload-exists
-              %span.fileupload-preview
-            %span.btn.btn-file
-              %span.fileupload-new
-                Choose File
-              %span.fileupload-exists
-                %i.icon-refresh
-              = ff.file_field :attachment
-            %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"}
-              %i.icon-remove
+                %i.icon-remove
+  %fieldset
+    %legend Veil Passes
+    - @subject.veil_passes.joins(:user).order(:users => [:first_name, :last_name]).each do |vp|
+      = f.fields_for :veil_passes, vp do |ff|
+        .control-group
+          = ff.label :_destroy, vp.user_name, class: "control-label"
+          .controls
+            %label.checkbox
+              = ff.check_box :_destroy
+              Delete
+
+    = f.fields_for :veil_passes, @subject.veil_passes.new do |ff|
+      .control-group
+        = ff.label :user_id, "New Veil Pass", :class => "control-label"
+        .controls
+          = ff.select(:user_id, User.pcs.order(:first_name, :last_name).map {|u| [u.name, u.id]}, :include_blank => true)
+
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to "Cancel", @subject.new_record? ? subjects_path : @subject, class: "btn pull-right"

@@ -11,6 +11,18 @@ class User < ActiveRecord::Base
 
   before_create :first_user_is_admin
 
+  has_many :veil_passes, :dependent => :destroy
+
+
+  def self.pcs
+    where(:dm => false)
+  end
+
+
+  def name
+    first_name + " " + last_name
+  end
+
 
   private
 

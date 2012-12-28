@@ -8,7 +8,7 @@ module ApplicationHelper
   def render_wiki(text)
     renderer = Redcarpet::Render::XHTML.new(with_toc_data: true)
     x = WorldWiki::WikiParser.new.parse(text).render
-    y = DmStripper.strip(x, current_user)
+    y = DmStripper.strip(x, current_user, @subject.authorized_users.include?(current_user))
     render_wiki_toc(text)
     Redcarpet::Markdown.new(renderer).render(y).html_safe
   end
@@ -30,6 +30,12 @@ module ApplicationHelper
     content_tag("i", "", :class => "icon-lock").html_safe
   end
 
+  def unlocked_icon
+    content_tag("abbr", title: "You have a veil pass for this subject.") do
+      content_tag("i", "", :class => "icon-unlock").html_safe
+    end
+  end
+
   def attachment_metadata(attachment)
     bits = []
 
@@ -38,12 +44,12 @@ module ApplicationHelper
         bits << number_to_human_size(attachment.file_size)
       end
 
-      if attachment.width && attachment.height
-        bits << "#{attachment.width}&times;#{attachment.height}"
-      end
-
       if attachment.content_type
         bits << attachment.content_type
+      end
+
+      if attachment.width && attachment.height
+        bits << "#{attachment.width}&times;#{attachment.height}"
       end
 
       bits.join(", ").html_safe

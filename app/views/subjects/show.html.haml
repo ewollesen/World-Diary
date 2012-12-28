@@ -1,9 +1,15 @@
 .page-header
   %h1.title
     = @subject.name
-    = locked_icon if @subject.dm_only?
-
+    - if @subject.dm_only?
+      - if current_user.dm?
+        = locked_icon
+      - elsif can?(:read, @subject)
+        = unlocked_icon
+    - elsif @subject.authorized_users.include?(current_user)
+      = unlocked_icon
 = render_wiki(@subject.text)
+
 
 = content_for(:sidebar) do
   - @subject.attachments.each do |attachment|
@@ -20,9 +26,20 @@
 
     - unless attachment == @subject.attachments.last
       %div{style: "margin-top: 4px"}  
-= content_for(:sidebar) do
 
-  - if can?(:update, Subject) || can?(:destroy, Subject)
+
+- if @subject.veil_passes.present? && can?(:read, VeilPass)
+  = content_for(:sidebar) do
+    %h4
+      Veil Passes
+      %i.icon-key
+    %ul
+      = list_of(@subject.veil_passes.joins(:user).order(:users => [:first_name, :last_name])) do |vp|
+        = vp.user_name
+
+
+- if can?(:update, Subject) || can?(:destroy, Subject)
+  = content_for(:sidebar) do
     %h4
       Actions
       %i.icon-wrench

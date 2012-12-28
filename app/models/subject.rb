@@ -7,13 +7,17 @@ class Subject < ActiveRecord::Base
   validates :permalink, :uniqueness => true, :presence => true
   validates :text, :presence => true
 
-  attr_accessible :name, :text, :permalink, :dm_only, :attachments_attributes
+  attr_accessible :name, :text, :permalink, :dm_only, :attachments_attributes, :veil_passes_attributes
 
   class_attribute :specifier
 
   has_many :attachments, :dependent => :destroy
-
   accepts_nested_attributes_for :attachments, :allow_destroy => true
+
+  has_many :veil_passes, :dependent => :destroy
+  accepts_nested_attributes_for :veil_passes, :allow_destroy => true, :reject_if => proc {|attributes| attributes["user_id"].blank?}
+
+  has_many :authorized_users, :through => :veil_passes, :source => :user
 
 
   def self.lookup(name, specifier=nil)

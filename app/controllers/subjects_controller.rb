@@ -2,6 +2,7 @@ class SubjectsController < ApplicationController
   load_resource :find_by => :permalink
   authorize_resource
 
+
   def create
     if @subject.save
       redirect_to @subject, notice: "Subject created"

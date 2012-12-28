@@ -34,6 +34,16 @@ class Ability
     if user.dm?
       can :manage, :all
     else
+      # https://github.com/ryanb/cancan/issues/213
+      ugly_sql = <<EOF
+subjects.id IN (
+  SELECT subject_id
+    FROM veil_passes
+    WHERE veil_passes.user_id = ?)
+EOF
+      can :read, Subject, [ugly_sql, user.id] do |subject|
+        subject.veil_passes.map(&:user_id).include?(user.id)
+      end
       can :read, Subject, :dm_only => false
     end
   end

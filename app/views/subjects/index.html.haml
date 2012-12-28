@@ -8,7 +8,11 @@
         = list_of(group) do |subject|
           = link_to(subject) do
             = subject.name
-            = locked_icon if subject.dm_only?
+            - if subject.dm_only?
+              - if current_user.dm?
+                = locked_icon
+              - elsif can? :read, subject
+                = unlocked_icon
 
 
 = content_for(:sidebar) do
