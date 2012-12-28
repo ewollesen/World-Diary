@@ -12,9 +12,13 @@
 
 
 = content_for(:sidebar) do
-  %ul.nav.nav-tabs.nav-stacked
-    - if can?(:create, Subject)
-      %li
-        = link_to(new_subject_path) do
-          %i.icon-plus
-          New
+  - if can?(:create, Subject)
+    %h4
+      Actions
+      %i.icon-wrench
+    %ul.nav.nav-tabs.nav-stacked
+      - if can?(:create, Subject)
+        %li
+          = link_to(new_subject_path) do
+            %i.icon-plus
+            New

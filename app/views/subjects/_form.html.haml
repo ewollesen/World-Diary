@@ -1,4 +1,4 @@
-= form_for @subject, html: {multipart: true} do |f|
+= form_for @subject, html: {multipart: true, class: "form-horizontal"} do |f|
   .control-group
     = f.label :name, :class => 'control-label'
     .controls
@@ -6,17 +6,17 @@
   .control-group
     = f.label :text, :class => 'control-label'
     .controls
-      = f.text_area :text, :class => 'text_area', :cols => 80, :rows => 24
+      = f.text_area :text, :class => 'text_area', :cols => 80, :rows => 12
   - unless @subject.new_record?
     .control-group
       = f.label :permalink, :class => 'control-label'
       .controls
         = f.text_field :permalink, :class => 'text_field'
   .control-group
-    %label.checkbox{for: "subject_dm_only"}
-      .controls
+    .controls
+      %label.checkbox{for: "subject_dm_only"}
         = f.check_box :dm_only
-      DM only
+        DM only
   - @subject.attachments.each_with_index do |attachment, idx|
     = f.fields_for :attachments, attachment do |ff|
       .control-group
@@ -56,4 +56,4 @@
               %i.icon-remove
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), @subject.new_record? ? subjects_path : @subject, :class => 'btn'
+    = link_to "Cancel", @subject.new_record? ? subjects_path : @subject, class: "btn pull-right"

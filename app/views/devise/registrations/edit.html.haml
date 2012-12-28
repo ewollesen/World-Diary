@@ -3,9 +3,10 @@
 
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: {method: :put, class: "form-horizontal"}) do |form|
   = render form
-  .control-group
-    .controls
-      = form.submit "Update", class: "btn"
+  .form-actions
+    = form.submit "Update", class: "btn btn-primary"
+    = link_to "Cancel", root_path, class: "btn pull-right"
+
 
 %h3 Cancel my account
 %p
