@@ -8,17 +8,7 @@
         = list_of(group) do |subject|
           = link_to(subject) do
             = subject.name
-            - if subject.dm_only?
-              - if current_user.dm?
-                = locked_icon
-              - elsif can? :read, subject
-                = unlocked_icon
-            - elsif subject.authorized_users.include?(current_user)
-              = unlocked_icon
-            - if subject.veil_passes.present? && current_user.try(:dm?)
-              %abbr{title: "Veil passes exist for this subject."}
-                %i.icon-key
-
+          = context_icon(subject)
 
 = content_for(:sidebar) do
   - if can?(:create, Subject)

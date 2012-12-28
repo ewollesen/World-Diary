@@ -5,6 +5,16 @@ module ApplicationHelper
     current_page?(path) ? "active" : ""
   end
 
+  def context_icon(subject)
+    user = current_user || User.new
+
+    if user.dm?
+      context_icon_dm(subject)
+    else
+      context_icon_user(subject, user)
+    end
+  end
+
   def render_wiki(text)
     renderer = Redcarpet::Render::XHTML.new(with_toc_data: true)
     x = WorldWiki::WikiParser.new.parse(text).render
@@ -55,6 +65,32 @@ module ApplicationHelper
       bits.join(", ").html_safe
     end
 
+  end
+
+
+  private
+
+  def context_icon_dm(subject)
+    html = ""
+
+    if subject.dm_only?
+      html << content_tag("i", "", :class => "icon-lock")
+    end
+    if subject.authorized_users.present?
+      html << content_tag("abbr", title: "Veil passes exist for this subject.") do
+        content_tag("i", "", :class => "icon-key")
+      end
+    end
+
+    html.html_safe
+  end
+
+  def context_icon_user(subject, user)
+    if subject.authorized_user?(user)
+      content_tag("abbr", title: "You have a veil pass for this subject.") do
+        content_tag("i", "", :class => "icon-key")
+      end
+    end
   end
 
 end

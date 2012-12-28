@@ -1,16 +1,7 @@
 .page-header
   %h1.title
     = @subject.name
-    - if @subject.dm_only?
-      - if current_user.dm?
-        = locked_icon
-      - elsif can?(:read, @subject)
-        = unlocked_icon
-    - elsif @subject.authorized_users.include?(current_user)
-      = unlocked_icon
-    - if @subject.veil_passes.present? && current_user.try(:dm?)
-      %abbr{title: "Veil passes exist for this subject."}
-        %i.icon-key
+    = context_icon(@subject)
 
 = render_wiki(@subject.text)
 

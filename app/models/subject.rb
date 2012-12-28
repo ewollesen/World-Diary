@@ -42,6 +42,10 @@ class Subject < ActiveRecord::Base
   #   self.specifier == specifier ? self.name : nil
   # end
 
+  def authorized_user?(user)
+    authorized_users.include?(user)
+  end
+
 
   private
 
