@@ -17,7 +17,6 @@ class Attachment < ActiveRecord::Base
 
   def update_metadata
     if attachment.present? && attachment_changed?
-      # not working for PDFs
       self.content_type = attachment.file.content_type
       self.file_size = attachment.file.size
 
