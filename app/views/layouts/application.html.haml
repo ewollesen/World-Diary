@@ -21,7 +21,9 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to("World Diary", root_path, class: "brand")
+          = link_to(root_path, class: "brand") do
+            %i.icon-globe
+            World Diary
           .container.nav-collapse
             %ul.nav
               %li{class: active_link_class(subjects_path)}
