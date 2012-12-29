@@ -1,29 +1,19 @@
 @import "compass/css3/border-radius"
 
-ul.crumbs
-  margin-left: 0
-  margin-top: -10px
-  margin-bottom: -10px
+$bs_small: 85%
+$bs_muted: #999
+$bs_alert: #B94A48
+$bs_alert_success: #DFF0D8
+$bs_alert_warning: #FCF8E3
+$bs_alert_info: #D9EDF7
 
-  li
-    display: inline-block
-
-h1.title
-  ul.actions
-    display: inline-block
-    font:
-      size: small
-      weight: normal
-
-    li
-      display: inline-block
-      vertical-align: middle
 
 footer
   margin-top: 50px
 
-
-h1, h2, h3, h4, h5, h6, button, input[type=button], input[type=submit]
+h1, h2, h3, h4, h5, h6,
+button, input[type=button], input[type=submit],
+.btn
   text-transform: capitalize
 
 .page-header
@@ -35,15 +25,33 @@ h1.title
 textarea
   width: 500px
 
-$bs_alert_success: #DFF0D8
-$bs_alert_warning: #FCF8E3
-$bs_alert_info: #D9EDF7
-
-span.dm, div.dm
+.dm
   background-color: $bs_alert_info
 
-span.vp, div.vp
+.vp
   background-color: $bs_alert_warning
 
 a[href*='subjects/new?']
   color: red
+
+footer
+  font-size: $bs_small
+  color: $bs_muted
+
+a.action-danger
+  color: $bs_alert
+
+ul.inline
+  list-style: none
+  margin-left: 0px
+
+  li
+    display: inline-block
+    padding-left: 5px
+    padding-right: 5px
+
+    &:first-child
+      padding-left: 0
+
+    &:last-child
+      padding-right: 0

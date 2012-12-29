@@ -10,8 +10,8 @@
   - @subject.attachments.each do |attachment|
     - if attachment == @subject.attachments.first
       %h4
-        Attachments
         %i.icon-paper-clip
+        Attachments
     = link_to(attachment.attachment.url) do
       - if attachment.image? # TODO set default url
         = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
@@ -22,12 +22,21 @@
     - unless attachment == @subject.attachments.last
       %div{style: "margin-top: 4px"}  
 
+  %h4
+    %i.icon-time
+    Changes
+  .row
+    .span1 Updated:
+    .span2= @subject.updated_at
+  .row
+    .span1 Created:
+    .span2= @subject.created_at
 
 - if @subject.veil_passes.present? && can?(:read, VeilPass)
   = content_for(:sidebar) do
     %h4
-      Veil Passes
       %i.icon-key
+      Veil Passes
     %ul
       = list_of(@subject.veil_passes.joins(:user).order(:users => [:first_name, :last_name])) do |vp|
         = vp.user_name
@@ -36,9 +45,9 @@
 - if can?(:update, Subject) || can?(:destroy, Subject)
   = content_for(:sidebar) do
     %h4
-      Actions
       %i.icon-wrench
-    %ul.nav.nav-tabs.nav-stacked
+      Actions
+    %ul.inline
       - if can?(:update, Subject)
         %li
           = link_to(edit_subject_path(@subject), accesskey: "e") do
@@ -47,6 +56,8 @@
       - if can?(:destroy, Subject)
         %li
           = link_to(subject_path(@subject),
-                    :method => :delete, :confirm => "Are you sure?") do
+                    :method => :delete,
+                    :class => "action-danger",
+                    :confirm => "Are you sure?") do
             %i.icon-remove
             Delete

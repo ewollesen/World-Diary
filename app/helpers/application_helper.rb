@@ -74,7 +74,7 @@ module ApplicationHelper
     html = ""
 
     if subject.dm_only?
-      html << content_tag("i", "", :class => "icon-lock")
+      html << content_tag("i", "", :class => "icon-lock") + " "
     end
     if subject.authorized_users.present?
       html << content_tag("abbr", title: "Veil passes exist for this subject.") do
