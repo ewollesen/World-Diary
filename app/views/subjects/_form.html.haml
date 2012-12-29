@@ -1,44 +1,40 @@
 = form_for @subject, html: {multipart: true, class: "form-horizontal"} do |f|
-  .control-group
-    = f.label :name, :class => 'control-label'
-    .controls
-      = f.text_field :name, :class => 'text_field'
-  .control-group
-    = f.label :text, :class => 'control-label'
-    .controls
-      = f.text_area :text, :class => 'text_area', :cols => 80, :rows => 12
-  - unless @subject.new_record?
+  %fieldset
     .control-group
-      = f.label :permalink, :class => 'control-label'
+      = f.label :name, :class => 'control-label'
       .controls
-        = f.text_field :permalink, :class => 'text_field'
-  .control-group
-    .controls
-      %label.checkbox{for: "subject_dm_only"}
-        = f.check_box :dm_only
-        DM only
+        = f.text_field :name, :class => 'text_field'
+    .control-group
+      = f.label :text, :class => 'control-label'
+      .controls
+        = f.text_area :text, :class => 'text_area', :cols => 80, :rows => 12
+    - unless @subject.new_record?
+      .control-group
+        = f.label :permalink, :class => 'control-label'
+        .controls
+          = f.text_field :permalink, :class => 'text_field'
+    .control-group
+      .controls
+        %label.checkbox{for: "subject_dm_only"}
+          = f.check_box :dm_only
+          DM only
+
   %fieldset
     %legend Attachments
     - @subject.attachments.each do |attachment|
       = f.fields_for :attachments, attachment do |ff|
         .control-group
-          = ff.label :attachment, "Attachment", :class => "control-label"
+          - if attachment.image?
+            = ff.label :_destroy, :class => "control-label" do
+              = image_tag(attachment.attachment.micro.url)
+          - else
+            = ff.label :_destroy, :class => "control-label" do
+              = File.basename(attachment.attachment.path)
           .controls
-            .fileupload.fileupload-exists{"data-provides" => "fileupload"}
-              .input-append
-                .uneditable-input
-                  %i.icon-file.fileupload-exists
-                  %span.fileupload-preview
-                    = File.basename(ff.object.attachment.path)
-                %span.btn.btn-file
-                  %span.fileupload-new
-                    Choose File
-                  %span.fileupload-exists
-                    %i.icon-refresh
-                  = ff.file_field :attachment
-                  = ff.hidden_field :attachment_cache
-                %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"}
-                  %strong.icon-remove
+            %label.checkbox
+              = ff.check_box :_destroy
+              Delete
+
     = f.fields_for :attachments, @subject.attachments.new do |ff|
       .control-group
         = ff.label :attachment, "New Attachment", :class => "control-label"

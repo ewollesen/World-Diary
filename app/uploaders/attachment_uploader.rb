@@ -25,6 +25,10 @@ class AttachmentUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [262, 262]
   end
 
+  version :micro, :if => :image? do
+    process :resize_to_fill => [80, 80]
+  end
+
 
   protected
 
