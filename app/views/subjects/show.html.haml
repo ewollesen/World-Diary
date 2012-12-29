@@ -41,7 +41,7 @@
     %ul.nav.nav-tabs.nav-stacked
       - if can?(:update, Subject)
         %li
-          = link_to(edit_subject_path(@subject)) do
+          = link_to(edit_subject_path(@subject), accesskey: "e") do
             %i.icon-pencil
             Edit
       - if can?(:destroy, Subject)
