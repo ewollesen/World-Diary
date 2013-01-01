@@ -1,5 +1,5 @@
 class Attachment < ActiveRecord::Base
-  belongs_to :subject
+  belongs_to :subject, :touch => true
 
   mount_uploader :attachment, AttachmentUploader
 
