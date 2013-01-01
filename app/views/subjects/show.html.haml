@@ -27,10 +27,12 @@
     Changes
   .row
     .span1 Updated:
-    .span2= @subject.updated_at
+    .span2{title: @subject.updated_at.year}
+      = @subject.updated_at.to_s(:short)
   .row
     .span1 Created:
-    .span2= @subject.created_at
+    .span2{title: @subject.created_at.year}
+      = @subject.created_at.to_s(:short)
 
 - if @subject.veil_passes.present? && can?(:read, VeilPass)
   = content_for(:sidebar) do
