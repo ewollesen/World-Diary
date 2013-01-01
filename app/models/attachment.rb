@@ -3,7 +3,7 @@ class Attachment < ActiveRecord::Base
 
   mount_uploader :attachment, AttachmentUploader
 
-  attr_accessible :attachment, :attachment_cache
+  attr_accessible :attachment, :attachment_cache, :dm_only
 
   before_save :update_metadata
 

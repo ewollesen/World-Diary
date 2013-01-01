@@ -46,6 +46,17 @@ EOF
       end
       can :read, Subject, :dm_only => false
       can :read, VeilPass, :user_id => user.id
+      # https://github.com/ryanb/cancan/issues/213
+      ugly_sql = <<EOF
+attachments.id IN (
+  SELECT attachments.id
+    FROM attachments
+    LEFT JOIN veil_passes ON veil_passes.subject_id = attachments.subject_id
+    WHERE veil_passes.user_id = ? AND
+      veil_passes.includes_attachments IS true)
+EOF
+      can :read, Attachment, [ugly_sql, user.id]
+      can :read, Attachment, :dm_only => false
     end
   end
 

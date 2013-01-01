@@ -7,7 +7,8 @@
 
 
 = content_for(:sidebar) do
-  - @subject.attachments.each do |attachment|
+  -# Use @attachments, which is restricted by dm only / veil passes
+  - @attachments.each do |attachment|
     - if attachment == @subject.attachments.first
       %h4
         %i.icon-paper-clip

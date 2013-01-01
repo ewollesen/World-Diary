@@ -32,6 +32,10 @@
               = File.basename(attachment.attachment.path)
           .controls
             %label.checkbox
+              = ff.check_box :dm_only
+              DM only
+          .controls
+            %label.checkbox
               = ff.check_box :_destroy
               Delete
 
@@ -52,11 +56,19 @@
                 = ff.file_field :attachment
               %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"}
                 %i.icon-remove
+        .controls
+          %label.checkbox
+            = ff.check_box :dm_only
+            DM only
   %fieldset
     %legend Veil Passes
     - @subject.veil_passes.joins(:user).order(:users => [:first_name, :last_name]).each do |vp|
       = f.fields_for :veil_passes, vp do |ff|
         .control-group
+          .controls
+            %label.checkbox
+              = ff.check_box :includes_attachments
+              Includes attachments
           = ff.label :_destroy, vp.user_name, class: "control-label"
           .controls
             %label.checkbox
@@ -65,6 +77,10 @@
 
     = f.fields_for :veil_passes, @subject.veil_passes.new do |ff|
       .control-group
+        .controls
+          %label.checkbox
+            = ff.check_box :includes_attachments
+            Includes attachments
         = ff.label :user_id, "New Veil Pass", :class => "control-label"
         .controls
           = ff.select(:user_id, User.pcs.order(:first_name, :last_name).map {|u| [u.name, u.id]}, :include_blank => true)

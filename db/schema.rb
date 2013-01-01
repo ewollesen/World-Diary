@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227212647) do
+ActiveRecord::Schema.define(:version => 20130101035429) do
 
   create_table "attachments", :force => true do |t|
     t.integer "subject_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20121227212647) do
     t.integer "file_size"
     t.integer "width"
     t.integer "height"
+    t.boolean "dm_only",      :default => true, :null => false
   end
 
   create_table "subjects", :force => true do |t|
@@ -53,8 +54,9 @@ ActiveRecord::Schema.define(:version => 20121227212647) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "veil_passes", :force => true do |t|
-    t.integer "subject_id", :null => false
-    t.integer "user_id",    :null => false
+    t.integer "subject_id",                              :null => false
+    t.integer "user_id",                                 :null => false
+    t.boolean "includes_attachments", :default => false, :null => false
   end
 
 end
