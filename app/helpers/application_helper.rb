@@ -70,7 +70,7 @@ module ApplicationHelper
     if attachment.dm_only
       attachment_image_overlay_inner(attachment, &block)
     else
-      yield
+      capture {yield}
     end
   end
 
@@ -80,9 +80,7 @@ module ApplicationHelper
   def attachment_image_overlay_inner(attachment, &block)
     content_tag(:div, :class => "attachment-overlay-dm-only") do
       capture {yield} +
-        content_tag(:div, :class => "overlay-icons") do
-        context_icon(attachment)
-      end
+        content_tag(:div, context_icon(attachment), :class => "overlay-icons")
     end
   end
 

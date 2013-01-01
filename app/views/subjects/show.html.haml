@@ -19,6 +19,8 @@
           = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
       %span<>
         = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
+    - unless attachment.image?
+      = context_icon(attachment)
     = attachment_metadata(attachment)
 
     - unless attachment == @subject.attachments.last
