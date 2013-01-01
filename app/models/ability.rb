@@ -45,7 +45,18 @@ EOF
         subject.veil_passes.map(&:user_id).include?(user.id)
       end
       can :read, Subject, :dm_only => false
+
       can :read, VeilPass, :user_id => user.id
+      # https://github.com/ryanb/cancan/issues/213
+      ugly_sql = <<EOF
+veil_passes.id IN (
+  SELECT veil_passes.id
+    FROM veil_passes
+    LEFT JOIN veil_passes vp ON veil_passes.subject_id = vp.subject_id
+    WHERE veil_passes.user_id = ? AND vp.user_id <> ?)
+EOF
+      can :read, VeilPass, [ugly_sql, user.id, user.id]
+
       # https://github.com/ryanb/cancan/issues/213
       ugly_sql = <<EOF
 attachments.id IN (
