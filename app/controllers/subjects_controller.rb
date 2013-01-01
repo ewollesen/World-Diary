@@ -27,7 +27,9 @@ class SubjectsController < ApplicationController
   end
 
   def show
-    @attachments = @subject.attachments.accessible_by(Ability.new(current_user))
+    abil = Ability.new(current_user)
+    @attachments = @subject.attachments.accessible_by(abil)
+    @veil_passes = @subject.veil_passes.accessible_by(abil)
   end
 
   def update

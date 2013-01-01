@@ -38,13 +38,14 @@
     .span2{title: @subject.created_at.year}
       = @subject.created_at.to_s(:short)
 
-- if @subject.veil_passes.present? && can?(:read, VeilPass)
+-# Use @veil_passes, which is properly restricted by authorization
+- if @veil_passes.present?
   = content_for(:sidebar) do
     %h4
       %i.icon-key
       Veil Passes
     %ul
-      = list_of(@subject.veil_passes.joins(:user).order(:users => [:first_name, :last_name])) do |vp|
+      = list_of(@veil_passes.joins(:user).order(:users => [:first_name, :last_name])) do |vp|
         = vp.user_name
         - if vp.includes_attachments
           %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
