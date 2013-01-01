@@ -15,7 +15,8 @@
         Attachments
     = link_to(attachment.attachment.url) do
       - if attachment.image? # TODO set default url
-        = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
+        = attachment_image_overlay(attachment) do
+          = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
       %span<>
         = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
     = attachment_metadata(attachment)
@@ -43,7 +44,9 @@
     %ul
       = list_of(@subject.veil_passes.joins(:user).order(:users => [:first_name, :last_name])) do |vp|
         = vp.user_name
-
+        - if vp.includes_attachments
+          %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
+            %i.icon-paper-clip
 
 - if can?(:update, Subject) || can?(:destroy, Subject)
   = content_for(:sidebar) do

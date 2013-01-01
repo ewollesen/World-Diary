@@ -64,20 +64,37 @@ module ApplicationHelper
 
       bits.join(", ").html_safe
     end
+  end
 
+  def attachment_image_overlay(attachment, &block)
+    if attachment.dm_only
+      attachment_image_overlay_inner(attachment, &block)
+    else
+      yield
+    end
   end
 
 
   private
 
+  def attachment_image_overlay_inner(attachment, &block)
+    content_tag(:div, :class => "attachment-overlay-dm-only") do
+      capture {yield} +
+        content_tag(:div, :class => "overlay-icons") do
+        context_icon(attachment)
+      end
+    end
+  end
+
   def context_icon_dm(subject)
     html = ""
+    noun = subject.is_a?(Attachment) ? "attachment" : "subject"
 
     if subject.dm_only?
       html << content_tag("i", "", :class => "icon-lock") + " "
     end
     if subject.authorized_users.present?
-      html << content_tag("abbr", title: "Veil passes exist for this subject.") do
+      html << content_tag("abbr", title: "Veil passes exist for this #{noun}.", rel: "tooltip") do
         content_tag("i", "", :class => "icon-key")
       end
     end
@@ -86,8 +103,10 @@ module ApplicationHelper
   end
 
   def context_icon_user(subject, user)
+    noun = subject.is_a?(Attachment) ? "attachment" : "subject"
+
     if subject.authorized_user?(user)
-      content_tag("abbr", title: "You have a veil pass for this subject.") do
+      content_tag("abbr", rel: "tooltip", title: "You have a veil pass for this #{noun}.") do
         content_tag("i", "", :class => "icon-key")
       end
     end

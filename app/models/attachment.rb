@@ -7,9 +7,17 @@ class Attachment < ActiveRecord::Base
 
   before_save :update_metadata
 
+  has_many :veil_passes, :through => :subject, :include => :user, :conditions => ["veil_passes.includes_attachments = ?", true]
+
+  has_many :authorized_users, :through => :veil_passes, :source => :user
+
 
   def image?
     /^image\// === content_type
+  end
+
+  def authorized_user?(user)
+    authorized_users.include?(user)
   end
 
 

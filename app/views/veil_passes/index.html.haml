@@ -25,3 +25,6 @@
       = vp.subject.name
     - if current_user.dm?
       \- #{vp.user.name}
+    - if vp.includes_attachments
+      %abbr{title: "This veil pass includes attachments.", rel: "tooltip"}
+        %i.icon-key
