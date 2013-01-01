@@ -12,7 +12,7 @@ class Subject < ActiveRecord::Base
   class_attribute :specifier
 
   has_many :attachments, :dependent => :destroy
-  accepts_nested_attributes_for :attachments, :allow_destroy => true
+  accepts_nested_attributes_for :attachments, :allow_destroy => true, :reject_if => proc {|attributes| attributes["attachment"].blank?}
 
   has_many :veil_passes, :dependent => :destroy
   accepts_nested_attributes_for :veil_passes, :allow_destroy => true, :reject_if => proc {|attributes| attributes["user_id"].blank?}
