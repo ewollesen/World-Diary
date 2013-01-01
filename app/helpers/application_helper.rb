@@ -29,8 +29,8 @@ module ApplicationHelper
     if toc.present?
       content_for(:sidebar) do
         content_tag("h4") do
-          "Table of Contents ".html_safe +
-            content_tag("i", "", class: "icon-list-ul")
+          content_tag("i", "", class: "icon-list-ul") + " " +
+                      "Table of Contents ".html_safe
         end + toc.html_safe
       end
     end
