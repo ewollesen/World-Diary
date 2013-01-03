@@ -11,6 +11,7 @@ gem "rmagick"
 gem "pg"
 gem "redcarpet"
 gem "squeel"
+gem "turbolinks"
 gem "twitter-bootstrap-rails"
   gem "less-rails" # am I needed in production?
 gem "world_wiki", :git => "black.xmtp.net:/home/git/world_wiki.git"
