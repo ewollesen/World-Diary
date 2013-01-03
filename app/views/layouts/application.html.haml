@@ -37,6 +37,11 @@
                   = link_to(veil_passes_path) do
                     %i.icon-key
                     Veil Passes
+              - if can?(:edit, :users)
+                %li{class: active_link_class(users_path)}
+                  = link_to(users_path) do
+                    %i.icon-user
+                    Users
             .pull-right
               %ul.nav
                 - if user_signed_in?

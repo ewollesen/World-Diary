@@ -1,0 +1,25 @@
+.page-header
+  %h1 Users
+
+%table.table-condensed.table-striped
+  %thead
+    %tr
+      %th #.
+      %th Name
+      %th Email
+      %th Last Seen
+      %th Sign In Count
+  %tbody
+    - @users.each_with_index do |user, index|
+      %tr
+        %td
+          = succeed(".") do
+            = index+1
+        %td= user.name
+        %td= mail_to(user.email)
+        %td
+          - date = user.current_sign_in_at
+          %span{title: date.try(:year), rel: "tooltip"}
+            = date.try(:to_s, :short)
+        %td.numeric
+          = number_with_delimiter(user.sign_in_count)
