@@ -5,6 +5,8 @@
 
 = render_wiki(@subject.text)
 
+= content_for(:title) do
+  = @subject.name
 
 = content_for(:sidebar) do
   -# Use @attachments, which is restricted by dm only / veil passes
