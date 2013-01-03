@@ -1,12 +1,19 @@
+- if session[:recent_subjects].present?
+  = content_for(:sidebar) do
+    %h4
+      %i.icon-file
+      Recent Subjects
+    %ul.unstyled
+      = list_of(session[:recent_subjects]) do |title, url, time|
+        = link_to(title, url, {title: time_ago_in_words(time || Time.at(0)) + " ago", rel: "tooltip"})
+
 !!! 5
 %html(lang="en")
   %head
     %meta(charset="utf-8")
     %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    %title
-      = yield(:title) + " : " if content_for?(:title)
-      World Diary
+    %title= title
     = csrf_meta_tags
     / Le HTML5 shim, for IE6-8 support of HTML elements
     /[if lt IE 9]

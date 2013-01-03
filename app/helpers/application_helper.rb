@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def title
+    if content_for?(:title)
+      content_for(:title) + " : World Diary"
+    else
+      "World Diary"
+    end
+  end
+
   def active_link_class(path)
     current_page?(path) ? "active" : ""
   end

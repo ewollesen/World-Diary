@@ -1,6 +1,7 @@
 class SubjectsController < ApplicationController
   load_resource :find_by => :permalink
   authorize_resource
+  around_filter :track, :only => :show
 
 
   def create
@@ -38,6 +39,24 @@ class SubjectsController < ApplicationController
     else
       render :edit
     end
+  end
+
+
+  protected
+
+  NUM_RECENT_SUBJECTS = 9
+
+  def track
+    session[:recent_subjects] ||= []
+    title = @subject.name
+    url = request.fullpath
+    time = Time.now
+
+    yield
+
+    session[:recent_subjects] =
+      session[:recent_subjects].find_all {|t, u| u != url}.take(NUM_RECENT_SUBJECTS)
+    session[:recent_subjects].unshift([title, url, time])
   end
 
 end
