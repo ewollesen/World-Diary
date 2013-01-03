@@ -48,15 +48,15 @@ class SubjectsController < ApplicationController
 
   def track
     session[:recent_subjects] ||= []
-    title = @subject.name
-    url = request.fullpath
+    @recent_subjects = session[:recent_subjects].map {|id, time| [Subject.find(id), time]}
     time = Time.now
 
     yield
 
-    session[:recent_subjects] =
-      session[:recent_subjects].find_all {|t, u| u != url}.take(NUM_RECENT_SUBJECTS)
-    session[:recent_subjects].unshift([title, url, time])
+    session[:recent_subjects] = session[:recent_subjects]
+      .find_all {|id, time| id != @subject.id}
+      .take(NUM_RECENT_SUBJECTS)
+    session[:recent_subjects].unshift([@subject.id, time])
   end
 
 end

@@ -1,11 +1,12 @@
-- if session[:recent_subjects].present?
+- if @recent_subjects.present?
   = content_for(:sidebar) do
     %h4
       %i.icon-file
       Recent Subjects
     %ul.unstyled
-      = list_of(session[:recent_subjects]) do |title, url, time|
-        = link_to(title, url, {title: time_ago_in_words(time || Time.at(0)) + " ago", rel: "tooltip"})
+      = list_of(@recent_subjects) do |subject, time|
+        = link_to(subject.name, subject, {title: time_ago_in_words(time || Time.at(0)) + " ago", rel: "tooltip"})
+        = context_icon(subject)
 
 !!! 5
 %html(lang="en")
