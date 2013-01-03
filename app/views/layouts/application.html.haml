@@ -30,7 +30,7 @@
             %ul.nav
               %li{class: active_link_class(subjects_path)}
                 = link_to subjects_path, class: "halflings film" do
-                  %i.icon-group
+                  %i.icon-file
                   Subjects
               - if user_signed_in? && (current_user.dm? || current_user.veil_passes.present?)
                 %li{class: active_link_class(veil_passes_path)}
@@ -40,7 +40,7 @@
               - if can?(:edit, :users)
                 %li{class: active_link_class(users_path)}
                   = link_to(users_path) do
-                    %i.icon-user
+                    %i.icon-group
                     Users
             .pull-right
               %ul.nav
