@@ -15,9 +15,9 @@
     %h4
       Actions
       %i.icon-wrench
-    %ul.nav.nav-tabs.nav-stacked
+    %ul.unstyled
       - if can?(:create, Subject)
         %li
           = link_to(new_subject_path, accesskey: "n") do
             %i.icon-plus
-            New
+            New Subject

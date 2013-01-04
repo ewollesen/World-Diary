@@ -63,7 +63,7 @@
         %li
           = link_to(edit_subject_path(@subject), accesskey: "e") do
             %i.icon-pencil
-            Edit
+            Edit Subject
       - if can?(:destroy, Subject)
         %li
           = link_to(subject_path(@subject),
@@ -71,4 +71,4 @@
                     :class => "action-danger",
                     :confirm => "Are you sure?") do
             %i.icon-remove
-            Delete
+            Delete Subject
