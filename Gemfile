@@ -12,6 +12,7 @@ gem "rmagick"
 gem "pg"
 gem "redcarpet"
 gem "squeel"
+gem "thin"
 gem "turbolinks"
 gem "twitter-bootstrap-rails"
   gem "less-rails" # am I needed in production?
@@ -49,7 +50,6 @@ group :development, :test do
   gem "minitest-reporters"
   gem "pry"
   gem "pry-doc"
-  gem "thin"
   gem "vlad", :require => false
   gem "vlad-git", :require => false
 end
