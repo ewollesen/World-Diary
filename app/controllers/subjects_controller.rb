@@ -1,7 +1,7 @@
 class SubjectsController < ApplicationController
   load_resource :find_by => :permalink
   authorize_resource
-  around_filter :track, :only => :show
+  after_filter :track, :only => :show
 
 
   def create
@@ -47,16 +47,10 @@ class SubjectsController < ApplicationController
   NUM_RECENT_SUBJECTS = 9
 
   def track
-    session[:recent_subjects] ||= []
-    @recent_subjects = session[:recent_subjects].map {|id, time| [Subject.find(id), time]}
-    time = Time.now
-
-    yield
-
     session[:recent_subjects] = session[:recent_subjects]
       .find_all {|id, time| id != @subject.id}
       .take(NUM_RECENT_SUBJECTS)
-    session[:recent_subjects].unshift([@subject.id, time])
+    session[:recent_subjects].unshift([@subject.id, Time.now])
   end
 
 end
