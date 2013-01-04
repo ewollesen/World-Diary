@@ -46,7 +46,7 @@ EOF
       end
       can :read, Subject, :dm_only => false
 
-      can :read, VeilPass, :user_id => user.id
+
       # https://github.com/ryanb/cancan/issues/213
       ugly_sql = <<EOF
 veil_passes.id IN (
@@ -55,7 +55,12 @@ veil_passes.id IN (
     LEFT JOIN veil_passes vp ON veil_passes.subject_id = vp.subject_id
     WHERE veil_passes.user_id = ? AND vp.user_id <> ?)
 EOF
-      can :read, VeilPass, [ugly_sql, user.id, user.id]
+      can :read, VeilPass, [ugly_sql, user.id, user.id] do |vp|
+        true
+      end
+
+      can :read, VeilPass, :user_id => user.id
+
 
       # https://github.com/ryanb/cancan/issues/213
       ugly_sql = <<EOF

@@ -17,7 +17,7 @@ residing in a fictional role playing game universe.
 .row
   - @updated_subjects.in_groups(3, false) do |group|
     .span3
-      %ol{start: @updated_subjects.index(group.first)+1}
+      %ol{start: @updated_subjects.index(group.first).to_i + 1}
         = list_of(group) do |subject|
           = link_to(subject.name, subject, title: time_ago_in_words(subject.updated_at) + " ago", rel: "tooltip")
           = context_icon(subject)

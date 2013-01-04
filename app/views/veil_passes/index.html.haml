@@ -28,3 +28,5 @@
     - if vp.includes_attachments
       %abbr{title: "This veil pass includes attachments.", rel: "tooltip"}
         %i.icon-key
+  - if @veil_passes.empty?
+    %li No veil passes found
