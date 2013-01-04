@@ -4,6 +4,7 @@ gem "rails", "3.2.9"
 
 gem "cancan"
 gem "carrierwave"
+  gem "fog", "~> 1.3.1"
 gem "devise"
 gem "haml-rails"
 gem "nokogiri"
