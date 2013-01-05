@@ -16,7 +16,6 @@ gem "squeel"
 gem "thin"
 gem "turbolinks"
 gem "twitter-bootstrap-rails"
-  gem "less-rails" # am I needed in production?
 gem "world_wiki"
 
 # Gems used only for assets and not required
@@ -51,6 +50,7 @@ group :development, :test do
   gem "minitest-reporters"
   gem "pry"
   gem "pry-doc"
+  gem "less-rails" # am I needed in production?
   gem "vlad", :require => false
   gem "vlad-git", :require => false
 end
