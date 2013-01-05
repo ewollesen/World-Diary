@@ -251,7 +251,7 @@ GEM
     warden (1.2.1)
       rack (>= 1.0)
     websocket (1.0.6)
-    world_wiki (0.0.1)
+    world_wiki (0.0.2)
       activesupport
       redcarpet
       treetop
