@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+source "http://gems.xmtp.net"
 
 gem "rails", "3.2.9"
 
@@ -16,7 +17,7 @@ gem "thin"
 gem "turbolinks"
 gem "twitter-bootstrap-rails"
   gem "less-rails" # am I needed in production?
-gem "world_wiki", :git => "black.xmtp.net:/home/git/world_wiki.git"
+gem "world_wiki"
 
 # Gems used only for assets and not required
 # in production environments by default.
