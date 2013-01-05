@@ -2,6 +2,7 @@ if Rails.env.production?
   CarrierWave.configure do |config|
     config.cache_dir = "#{Rails.root}/tmp/uploads"
     config.delete_tmp_file_after_storage = false
+    config.enable_processing = true
     config.fog_credentials = {
       :provider               => 'AWS',                        # required
       :aws_access_key_id      => ENV["AWS_ACCESS_KEY_ID"],     # required

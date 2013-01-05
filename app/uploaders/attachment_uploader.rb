@@ -36,11 +36,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   protected
 
   def image?(attachment)
-    if Rails.env.production?
-      img = ::Magick::Image.ping(attachment.attachment).first
-    else
-      img = ::Magick::Image.ping(attachment.file).first
-    end
+    attachment.content_type.include?("image")
   rescue StandardError => e
     Rails.logger.debug("Not an image #{e.message}")
     false
