@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 source "http://gems.xmtp.net"
 
-gem "rails", "3.2.9"
+gem "rails", "3.2.11"
 
 gem "cancan"
 gem "carrierwave"
