@@ -1,0 +1,4 @@
+= form_for(@subject.comments.new, url: [@subject, @subject.comments.new]) do |f|
+  = f.text_area(:comment, class: "span12", rows: 4)
+
+  = f.submit nil, :class => "btn"

@@ -1,8 +1,9 @@
 source "https://rubygems.org"
 source "http://gems.xmtp.net"
 
-gem "rails", "3.2.11"
+gem "rails", "3.2.13"
 
+gem "acts_as_commentable", "3.0.1"
 gem "cancan"
 gem "carrierwave"
   gem "fog", "~> 1.3.1"

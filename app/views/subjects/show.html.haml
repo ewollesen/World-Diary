@@ -5,6 +5,30 @@
 
 = render_wiki(@subject.text)
 
+.row-fluid.comments
+  .span6
+    %h4 Comments
+    - @subject.comments.each do |comment|
+      .media
+        %i.icon-quote-left.icon-large.pull-left
+        .media-body
+          .media-heading
+            = comment.user_name
+            said:
+          .media.comment-body
+            = comment.comment
+            %span.muted
+              = time_ago_in_words(comment.created_at).capitalize
+              ago.
+
+  .span6
+    %h4 Add your comment
+    - if user_signed_in?
+      = render partial: "comments/form"
+    - else
+      = link_to("Sign in", new_user_session_path)
+      to comment.
+
 = content_for(:title) do
   = @subject.name
 
@@ -35,10 +59,11 @@
     .span1 Updated:
     .span2{title: @subject.updated_at.year}
       = @subject.updated_at.to_s(:short)
-  .row
-    .span1 Created:
-    .span2{title: @subject.created_at.year}
-      = @subject.created_at.to_s(:short)
+  - if can? :manage, @subject
+    .row
+      .span1 Created:
+      .span2{title: @subject.created_at.year}
+        = @subject.created_at.to_s(:short)
 
 -# Use @veil_passes, which is properly restricted by authorization
 - if @veil_passes.present?
