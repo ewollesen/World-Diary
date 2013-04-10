@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter do
     session[:recent_subjects] ||= []
     @recent_subjects = session[:recent_subjects].inject([]) do |subjects, (id, time)|
-      if subject = Subject.find_by_id(id)
+      if subject = Subject.where(id: id).first
         subjects << [subject, time]
       else
         subjects
