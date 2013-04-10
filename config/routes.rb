@@ -8,5 +8,7 @@ Wd::Application.routes.draw do
 
   resources :veil_passes, :users
 
+  resource :searches
+
   root :to => "homes#show"
 end

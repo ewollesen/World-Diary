@@ -21,6 +21,9 @@ class Subject < ActiveRecord::Base
 
   has_many :authorized_users, :through => :veil_passes, :source => :user
 
+  before_save :update_vp_text, :if => :text_changed?
+  before_save :update_anon_text, :if => :text_changed?
+
 
   def self.lookup(name, specifier=nil)
     s = scoped
@@ -54,4 +57,13 @@ class Subject < ActiveRecord::Base
   def self.dummy(name)
     Subject.new(name: name)
   end
+
+  def update_vp_text
+    self.vp_text = DmStripper.strip(text, nil, true)
+  end
+
+  def update_anon_text
+    self.anon_text = DmStripper.strip(text, nil, false)
+  end
+
 end

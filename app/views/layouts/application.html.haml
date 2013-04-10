@@ -50,6 +50,10 @@
                   = link_to(users_path) do
                     %i.icon-group
                     Users
+              = form_for(Search.new, html: {class: "pull-left form-search navbar-search"}) do |f|
+                .input-append
+                  = f.text_field(:query, class: "input-medium search-query")
+                  %button.btn{type: "submit"} Go
             .pull-right
               %ul.nav
                 - if user_signed_in?

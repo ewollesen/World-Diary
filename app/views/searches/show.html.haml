@@ -1,0 +1,13 @@
+%h1 Search Results
+
+%p
+  %em
+    Your search for <q>#{@search.query}</q> returned
+    = succeed(".") do
+      = pluralize(@search.results.size, "result")
+
+%ol
+  = list_of(@search.results) do |subject|
+    = link_to(subject) do
+      = subject.name
+      = context_icon(subject)
