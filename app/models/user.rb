@@ -18,6 +18,9 @@ class User < ActiveRecord::Base
     where(:dm => false)
   end
 
+  def short_name
+    first_name + " " + last_name[0..0] + "."
+  end
 
   def name
     first_name + " " + last_name

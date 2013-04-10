@@ -15,5 +15,5 @@ class Comment < ActiveRecord::Base
 
   attr_accessible :title, :comment
 
-  delegate :name, to: :user, prefix: true
+  delegate :name, :short_name, to: :user, prefix: true
 end
