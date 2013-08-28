@@ -73,6 +73,12 @@ attachments.id IN (
 EOF
       can :read, Attachment, [ugly_sql, user.id]
       can :read, Attachment, :dm_only => false
+
+      if user.persisted?
+        can :create, Comment
+        can :manage, Comment, user_id: user.id
+      end
+      can :read, Comment
     end
   end
 
