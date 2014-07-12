@@ -62,7 +62,7 @@
             DM only
   %fieldset
     %legend Veil Passes
-    - @subject.veil_passes.joins(:user).order(:users => [:first_name, :last_name]).each do |vp|
+    - @subject.veil_passes.joins(:user).order("users.first_name, users.last_name").each do |vp|
       = f.fields_for :veil_passes, vp do |ff|
         .control-group
           .controls

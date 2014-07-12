@@ -50,7 +50,7 @@
     = attachment_metadata(attachment)
 
     - unless attachment == @subject.attachments.last
-      %div{style: "margin-top: 4px"}  
+      %div{style: "margin-top: 4px"}
 
   %h4
     %i.icon-time
@@ -94,6 +94,6 @@
           = link_to(subject_path(@subject),
                     :method => :delete,
                     :class => "action-danger",
-                    :confirm => "Are you sure?") do
+                    :data => {:confirm => "Are you sure?"}) do
             %i.icon-remove
             Delete Subject

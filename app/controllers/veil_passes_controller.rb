@@ -4,6 +4,6 @@ class VeilPassesController < ApplicationController
 
 
   def index
-    @veil_passes = @veil_passes.joins(:subject).order(subject: :name)
+    @veil_passes = @veil_passes.joins(:subject).order("subjects.name")
   end
 end

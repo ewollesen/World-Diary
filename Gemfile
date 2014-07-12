@@ -1,34 +1,32 @@
 source "https://rubygems.org"
 source "http://gems.xmtp.net"
 
-gem "rails", "3.2.13"
+gem "rails", "4.1.1"
 
 gem "acts_as_commentable", "3.0.1"
 gem "cancan"
 gem "carrierwave"
   gem "fog", "~> 1.3.1"
+gem "coffee-rails"
+gem "compass-rails"
 gem "devise"
 gem "haml-rails"
 gem "nokogiri"
-gem "rmagick"
 gem "pg"
+#gem "polyamorous"#, :github => "activerecord-hackery/polyamorous"
 gem "redcarpet"
-gem "squeel"
+gem "rmagick"
+gem "sass-rails"
 gem "thin"
+gem "therubyracer", :platforms => :ruby
+  gem "libv8"
 gem "turbolinks"
 gem "twitter-bootstrap-rails"
+gem "uglifier"
 gem "world_wiki"
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem "coffee-rails", "~> 3.2.1"
-  gem "compass-rails"
-  gem "sass-rails", "~> 3.2.3"
-  gem "therubyracer", :platforms => :ruby
-    gem "libv8", "~> 3.11.8"
-  gem "uglifier", ">= 1.0.3"
-end
+# FIXME use strong parameters, but in the meantime...
+gem 'protected_attributes'
 
 gem "jquery-rails"
 
@@ -39,9 +37,11 @@ gem "jquery-rails"
 # gem "jbuilder"
 
 group :development, :test do
+  gem "better_errors"
+  gem "binding_of_caller"
   gem "capybara_minitest_spec"
   gem "database_cleaner"
-  gem "debugger"
+  #gem "debugger"
   gem "miniskirt"
   gem "minitest"
   gem "minitest-rails"

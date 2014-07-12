@@ -2,7 +2,7 @@
 
 class AttachmentUploader < CarrierWave::Uploader::Base
   include CarrierWave::RMagick
-  include Sprockets::Helpers::RailsHelper
+  # include Sprockets::Helpers::RailsHelper
 
   if Rails.env.production?
     storage :fog
