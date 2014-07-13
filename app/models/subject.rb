@@ -24,8 +24,7 @@ class Subject < ActiveRecord::Base
 
 
   def self.lookup(name, specifier=nil)
-    s = scoped
-    s = s.where(:name => name)
+    s = where(name: name)
     # if specifier && self.specifier
     #   s = s.where(:type => specifier_to_class(specifier))
     # end
