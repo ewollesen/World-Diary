@@ -4,12 +4,12 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Wd::Application.load_tasks
-
 begin
   require "vlad"
+  Vlad.load
   require "vlad/maintenance"
-  Vlad.load :scm => :git, :app => :passenger
 rescue LoadError
   # do nothing
 end
+
+Wd::Application.load_tasks

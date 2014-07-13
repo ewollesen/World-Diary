@@ -13,7 +13,5 @@ class Comment < ActiveRecord::Base
   # NOTE: Comments belong to a user
   belongs_to :user
 
-  attr_accessible :title, :comment
-
   delegate :name, :short_name, to: :user, prefix: true
 end

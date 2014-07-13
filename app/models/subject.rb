@@ -9,8 +9,6 @@ class Subject < ActiveRecord::Base
   validates :permalink, :uniqueness => true, :presence => true
   validates :text, :presence => true
 
-  attr_accessible :name, :text, :permalink, :dm_only, :attachments_attributes, :veil_passes_attributes
-
   class_attribute :specifier
 
   has_many :attachments, :dependent => :destroy

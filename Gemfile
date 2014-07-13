@@ -25,9 +25,6 @@ gem "twitter-bootstrap-rails"
 gem "uglifier"
 gem "world_wiki"
 
-# FIXME use strong parameters, but in the meantime...
-gem 'protected_attributes'
-
 gem "jquery-rails"
 
 # To use ActiveModel has_secure_password
@@ -52,5 +49,6 @@ group :development, :test do
   gem "pry-doc"
   gem "less-rails" # am I needed in production?
   gem "vlad", :require => false
+  gem "vlad-assets", require: false
   gem "vlad-git", :require => false
 end

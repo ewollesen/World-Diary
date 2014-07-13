@@ -1,55 +1,56 @@
-require "minitest_helper"
+require "test_helper"
 
 
-describe "Veil Passes integration" do
 
-  it "redirects anonymous users to the sign in page" do
-    visit veil_passes_path
+# describe "Veil Passes integration" do
 
-    current_path.must_equal new_user_session_path
-  end
+#   it "redirects anonymous users to the sign in page" do
+#     visit veil_passes_path
 
-  describe "signed in" do
+#     current_path.must_equal new_user_session_path
+#   end
 
-    let(:dm) {Factory(:user, dm: true, email: "dm@example.com")}
-    let(:user) {dm; Factory(:user)}
+#   describe "signed in" do
 
-    def sign_in
-      visit new_user_session_path
-      fill_in :user_email, :with => user.email
-      fill_in :user_password, :with => user.password
-      click_on "Sign in"
+#     let(:dm) {Factory(:user, dm: true, email: "dm@example.com")}
+#     let(:user) {dm; Factory(:user)}
 
-      page.has_link?("Sign Out").must_equal true
-    end
+#     def sign_in
+#       visit new_user_session_path
+#       fill_in :user_email, :with => user.email
+#       fill_in :user_password, :with => user.password
+#       click_on "Sign in"
 
-    before do
-      sign_in
-    end
+#       page.has_link?("Sign Out").must_equal true
+#     end
 
-    describe "having 0 veil passes" do
-      it "shows a blank list" do
-        visit veil_passes_path
+#     before do
+#       sign_in
+#     end
 
-        current_path.must_equal veil_passes_path
-      end
-    end
+#     describe "having 0 veil passes" do
+#       it "shows a blank list" do
+#         visit veil_passes_path
 
-    describe "having 1 veil pass" do
-      let(:subject) {Factory(:subject)}
+#         current_path.must_equal veil_passes_path
+#       end
+#     end
 
-      it "shows 1 veil pass" do
-        VeilPass.new do |vp|
-          vp.user = user
-          vp.subject = subject
-        end.save!
+#     describe "having 1 veil pass" do
+#       let(:subject) {Factory(:subject)}
 
-        visit veil_passes_path
+#       it "shows 1 veil pass" do
+#         VeilPass.new do |vp|
+#           vp.user = user
+#           vp.subject = subject
+#         end.save!
 
-        assert page.has_content?(subject.name), "Veil Pass not found"
-      end
+#         visit veil_passes_path
 
-    end
-  end
+#         assert page.has_content?(subject.name), "Veil Pass not found"
+#       end
 
-end
+#     end
+#   end
+
+# end

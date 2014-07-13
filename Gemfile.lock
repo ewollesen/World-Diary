@@ -152,8 +152,6 @@ GEM
     orm_adapter (0.5.0)
     pg (0.17.1)
     polyglot (0.3.5)
-    protected_attributes (1.0.8)
-      activemodel (>= 4.0.1, < 5.0)
     pry (0.10.0)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -232,6 +230,7 @@ GEM
     vlad (2.6.3)
       rake (>= 0.8, < 11.0)
       rake-remote_task (~> 2.1)
+    vlad-assets (0.0.1)
     vlad-git (2.2.0)
       vlad (>= 2.1.0)
     warden (1.2.3)
@@ -271,7 +270,6 @@ DEPENDENCIES
   minitest-reporters
   nokogiri
   pg
-  protected_attributes
   pry
   pry-doc
   rails (= 4.1.1)
@@ -284,5 +282,6 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier
   vlad
+  vlad-assets
   vlad-git
   world_wiki
