@@ -34,7 +34,7 @@ class SubjectsController < ApplicationController
   end
 
   def update
-    if @subject.update_attributes(params[:subject])
+    if @subject.update_attributes(subject_params)
       redirect_to @subject, :notice => "Subject updated"
     else
       render :edit

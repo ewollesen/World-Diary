@@ -72,7 +72,7 @@
       %i.icon-key
       Veil Passes
     %ul
-      = list_of(@veil_passes.joins(:user).order(:users => [:first_name, :last_name])) do |vp|
+      = list_of(@veil_passes.joins(:user).order("users.first_name, users.last_name")) do |vp|
         = vp.user_name
         - if vp.includes_attachments
           %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
