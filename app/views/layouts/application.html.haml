@@ -70,6 +70,9 @@
               - else
                 = link_to("Sign In", new_user_session_path)
 
+
+    .container
+      = bootstrap_flash if flash.present?
     .container
       .row
         .col-md-9

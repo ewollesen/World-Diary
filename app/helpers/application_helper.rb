@@ -13,6 +13,36 @@ module ApplicationHelper
     current_page?(path) ? "active" : ""
   end
 
+  def bootstrap_flash
+    return unless flash.present?
+
+    flash_map = {
+      notice: :success,
+      success: :success,
+      info: :info,
+      warning: :warning,
+      error: :danger,
+      alert: :warning,
+    }
+    classes = "col-sm-offset-3 col-sm-6 alert alert-dismissable"
+    close = content_tag("button", class: "close",
+                                  data: {dismiss: "alert"},
+                                  type: "button") do
+      content_tag("span", "×", "aria-hidden" => "true") +
+        content_tag("span", "Close", class: "sr-only")
+    end
+
+    divs = flash.map do |(key, value)|
+      content_tag("div",
+                  close + value,
+                  class: classes + " alert-#{flash_map[key.to_sym]}")
+    end
+
+    divs.reduce("") do |html, div|
+      html += content_tag("div", div, class: "row")
+    end.html_safe
+  end
+
   def context_icon(subject)
     user = current_user || User.new
 
