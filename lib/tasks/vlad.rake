@@ -14,8 +14,6 @@ begin
       ops = shared_links.map do |sp,rp|
         dir = File.dirname("#{latest_release}/#{rp}")
         run "[ -d \"#{dir}\" ] || mkdir -p \"#{dir}\""
-        $stderr.puts "sp %p\nrp %p\ndir %p" % [sp, rp, dir]
-        # File.exists?(dir) || FileUtils.mkdir_p(dir)
         "ln -fs #{shared_path}/#{sp} #{latest_release}/#{rp}"
       end
       run ops.join(" && ")
