@@ -5,24 +5,24 @@
   Veil passes allow you to see content that is otherwise restricted. Phrases,
   paragraphs, or whole Subjects can be restriced by the DM.
 
-%p
-  .vp
-    Content which you are able to see due to a veil pass is indicated by a
-    yellow background. Subjects that you can access due to a veil pass are
-    indicated by a key icon
-    = succeed(".") do
-      = fa_icon("key")
-    Please use caution when sharing restricted information with other players.
+%p.vp
+  Content which you are able to see due to a veil pass is indicated by a
+  yellow background. Subjects that you can access due to a veil pass are
+  indicated by a key icon
+  = succeed(".") do
+    = fa_icon("key")
+  Please use caution when sharing restricted information with other players.
 
-%h4
-  - unless current_user.dm?
+%h3
+  - if current_user.dm?
+    Current
+  - else
     #{current_user.name}'s
   Veil Passes
 
 %ul
   = list_of(@veil_passes) do |vp|
-    = link_to(vp.subject) do
-      = vp.subject.name
+    = link_to(vp.subject.name, vp.subject)
     - if current_user.dm?
       \- #{vp.user.name}
     - if vp.includes_attachments
