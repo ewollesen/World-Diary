@@ -36,7 +36,7 @@
   - @attachments.each do |attachment|
     - if attachment == @subject.attachments.first
       %h4
-        = fa_icon("paper-clip")
+        = fa_icon("paperclip")
         Attachments
     = link_to(attachment.attachment.url) do
       - if attachment.image? # TODO set default url
