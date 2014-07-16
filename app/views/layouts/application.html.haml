@@ -48,10 +48,14 @@
                 %li{class: active_link_class(users_path)}
                   = link_to("Users", users_path)
 
-          %form.navbar-form.navbar-left{role: "search"}
-            .form-group
-              %input.form-control{type: "text", placeholder: "Search"}
-            %button.btn.btn-default{type: "submit"} Submit
+          = simple_form_for(@search || Search.new,
+                            html: {class: "navbar-form navbar-left"}) do |f|
+            .input-group
+              %span.input-group-addon
+                = fa_icon("search")
+              = f.input(:query, label: false, as: :search, placeholder: "Search")
+            = f.button(:submit, "Go")
+
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li

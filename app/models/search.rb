@@ -1,17 +1,11 @@
 class Search
   extend ActiveModel::Naming
   include ActiveModel::Conversion
-  include ActiveModel::AttributeMethods
+  include ActiveModel::Model
 
-  attr_reader :query
+  attr_accessor :query
   attr_reader :results
 
-
-  def initialize(*args)
-    super
-
-    self.attributes = args.extract_options!
-  end
 
   def attributes
     {results: @results, query: @query}
@@ -37,12 +31,13 @@ class Search
 
 
   private
+end
 
-  def sql(user)
-    q = "%#{@query}%"
-    vp_user_id_clause = user.id ? " = %d" % [user.id] : "IS NULL"
+def sql(user)
+  q = "%#{@query}%"
+  vp_user_id_clause = user.id ? " = %d" % [user.id] : "IS NULL"
 
-    <<EOF
+  <<EOF
 SELECT subjects.*
   FROM subjects
   WHERE subjects.id IN (
@@ -71,6 +66,4 @@ SELECT subjects.*
           WHERE text ILIKE '#{q}' AND #{user.dm?}
   )
 EOF
-  end
-
 end
