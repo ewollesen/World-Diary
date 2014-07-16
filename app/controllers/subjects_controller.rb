@@ -34,8 +34,8 @@ class SubjectsController < ApplicationController
   end
 
   def update
-    if @subject.update_attributes(subject_params)
-      redirect_to @subject, :notice => "Subject updated"
+    if @subject.update(subject_params)
+      redirect_to @subject, notice: "Subject updated"
     else
       render :edit
     end
@@ -55,10 +55,19 @@ class SubjectsController < ApplicationController
 
 
   def subject_params
-    params.require(:subject)
+    params
+      .require(:subject)
       .permit(:name, :text, :permalink, :dm_only,
-              {veil_passes_attributes: [:id, :subject_id, :user_id, :includes_attachments, :_destroy]},
-              {attachments_attributes: [:id, :attachment, :attachment_cache, :dm_only, :_destroy]})
+              {veil_passes_attributes: [:id,
+                                        :subject_id,
+                                        :user_id,
+                                        :includes_attachments,
+                                        :_destroy]},
+              {attachments_attributes: [:id,
+                                        :attachment,
+                                        :attachment_cache,
+                                        :dm_only,
+                                        :_destroy]})
   end
 
 end
