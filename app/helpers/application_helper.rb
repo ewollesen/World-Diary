@@ -37,20 +37,19 @@ module ApplicationHelper
     if toc.present?
       content_for(:sidebar) do
         content_tag("h4") do
-          content_tag("i", "", class: "icon-list-ul") + " " +
-                      "Table of Contents ".html_safe
+          fa_icon("list-ul") + " " + "Table of Contents ".html_safe
         end + toc.html_safe
       end
     end
   end
 
   def locked_icon
-    content_tag("i", "", :class => "icon-lock").html_safe
+    fa_icon("lock")
   end
 
   def unlocked_icon
     content_tag("abbr", title: "You have a veil pass for this subject.") do
-      content_tag("i", "", :class => "icon-unlock").html_safe
+      fa_icon("unlock")
     end
   end
 
@@ -82,6 +81,10 @@ module ApplicationHelper
     end
   end
 
+  def veil_pass_user_ids
+    User.pcs.order(:first_name, :last_name).map {|u| [u.name, u.id]}
+  end
+
 
   private
 
@@ -93,19 +96,19 @@ module ApplicationHelper
   end
 
   def context_icon_dm(subject)
-    html = ""
+    html = []
     noun = subject.is_a?(Attachment) ? "attachment" : "subject"
 
     if subject.dm_only?
-      html << content_tag("i", "", :class => "icon-lock") + " "
+      html << fa_icon("lock")
     end
     if subject.authorized_users.present?
       html << content_tag("abbr", title: "Veil passes exist for this #{noun}.", rel: "tooltip") do
-        content_tag("i", "", :class => "icon-key")
+        fa_icon("key")
       end
     end
 
-    html.html_safe
+    html.join(" ").html_safe
   end
 
   def context_icon_user(subject, user)
@@ -113,7 +116,7 @@ module ApplicationHelper
 
     if subject.authorized_user?(user)
       content_tag("abbr", rel: "tooltip", title: "You have a veil pass for this #{noun}.") do
-        content_tag("i", "", :class => "icon-key")
+        fa_icon("key")
       end
     end
   end

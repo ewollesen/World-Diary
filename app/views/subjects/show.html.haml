@@ -5,12 +5,12 @@
 
 = render_wiki(@subject.text)
 
-.row-fluid.comments
-  .span6
+.row.comments
+  .col-md-6
     %h4 Comments
     - @subject.comments.each do |comment|
       .media
-        %i.icon-quote-left.icon-large.pull-left
+        = fa_icon("quote-left", class: "fa-2x pull-left")
         .media-body
           .media-heading
             = comment.user_short_name
@@ -21,7 +21,7 @@
               = time_ago_in_words(comment.created_at).capitalize
               ago.
 
-  .span6
+  .col-md-6
     %h4 Add your comment
     - if user_signed_in?
       = render partial: "comments/form"
@@ -37,7 +37,7 @@
   - @attachments.each do |attachment|
     - if attachment == @subject.attachments.first
       %h4
-        %i.icon-paper-clip
+        = fa_icon("paper-clip")
         Attachments
     = link_to(attachment.attachment.url) do
       - if attachment.image? # TODO set default url
@@ -53,41 +53,41 @@
       %div{style: "margin-top: 4px"}
 
   %h4
-    %i.icon-time
+    = fa_icon("clock-o")
     Changes
   .row
-    .span1 Updated:
-    .span2{title: @subject.updated_at.year}
+    .col-md-3 Updated:
+    .col-md-9{title: @subject.updated_at.year}
       = @subject.updated_at.to_s(:short)
   - if can? :manage, @subject
     .row
-      .span1 Created:
-      .span2{title: @subject.created_at.year}
+      .col-md-3 Created:
+      .col-md-9{title: @subject.created_at.year}
         = @subject.created_at.to_s(:short)
 
 -# Use @veil_passes, which is properly restricted by authorization
 - if @veil_passes.present?
   = content_for(:sidebar) do
     %h4
-      %i.icon-key
+      = fa_icon("key")
       Veil Passes
     %ul
       = list_of(@veil_passes.joins(:user).order("users.first_name, users.last_name")) do |vp|
         = vp.user_name
         - if vp.includes_attachments
           %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
-            %i.icon-paper-clip
+            = fa_icon("paper-clip")
 
 - if can?(:update, Subject) || can?(:destroy, Subject)
   = content_for(:sidebar) do
     %h4
-      %i.icon-wrench
+      = fa_icon("wrench")
       Actions
-    %ul.unstyled
+    %ul.list-unstyled
       - if can?(:update, Subject)
         %li
           = link_to(edit_subject_path(@subject), accesskey: "e") do
-            %i.icon-pencil
+            = fa_icon("pencil")
             Edit Subject
       - if can?(:destroy, Subject)
         %li
@@ -95,5 +95,5 @@
                     :method => :delete,
                     :class => "action-danger",
                     :data => {:confirm => "Are you sure?"}) do
-            %i.icon-remove
+            = fa_icon("times")
             Delete Subject

@@ -1,9 +1,9 @@
 - if @recent_subjects.present?
   = content_for(:sidebar) do
     %h4
-      %i.icon-file
+      = fa_icon("file")
       Recent Subjects
-    %ul.unstyled
+    %ul.list-unstyled
       = list_of(@recent_subjects) do |subject, time|
         = link_to(subject.name, subject, {title: time_ago_in_words(time || Time.at(0)) + " ago", rel: "tooltip"})
         = context_icon(subject)
@@ -11,86 +11,66 @@
 !!! 5
 %html(lang="en")
   %head
-    %meta(charset="utf-8")
-    %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
-    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %meta{charset: "utf-8"}
+    %meta{"http-equiv" => "X-UA-Compatible", content: "IE=edge"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
     %title= title
     = csrf_meta_tags
+
     / Le HTML5 shim, for IE6-8 support of HTML elements
     /[if lt IE 9]
-      = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"
-    = stylesheet_link_tag "application", :media => "all"
+      = javascript_include_tag("//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js")
+      = javascript_include_tag("//oss.maxcdn.com/respond/1.4.2/respond.min.js")
+    = stylesheet_link_tag("application", media: "all")
     %link{href: "/favicon.ico", rel: "shortcut icon"}
 
-
   %body
-    .navbar
-      .navbar-inner
-        .container
-          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          = link_to(root_path, class: "brand") do
-            %i.icon-globe
+    %nav.navbar.navbar-default{role: "navigation"}
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle{type: "button",
+                                data: {toggle: "collapse",
+                                       target: "wd-navbar-collapse"}}
+            %span.sr-only Toggle navigation
+            = fa_icon("bars")
+          = link_to(root_path, class: "navbar-brand") do
+            = fa_icon("globe")
             World Diary
-          .container.nav-collapse
-            %ul.nav
-              %li{class: active_link_class(subjects_path)}
-                = link_to subjects_path, class: "halflings film" do
-                  %i.icon-file
-                  Subjects
-              - if user_signed_in? && (current_user.dm? || current_user.veil_passes.present?)
-                %li{class: active_link_class(veil_passes_path)}
-                  = link_to(veil_passes_path) do
-                    %i.icon-key
-                    Veil Passes
-              - if can?(:edit, :users)
+
+        #wd-navbar-collapse.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li{class: active_link_class(subjects_path)}
+              = link_to("Subjects", subjects_path)
+            - if user_signed_in?
+              %li{class: active_link_class(veil_passes_path)}
+                = link_to("Veil Passes", veil_passes_path)
+              - if current_user.dm?
                 %li{class: active_link_class(users_path)}
-                  = link_to(users_path) do
-                    %i.icon-group
-                    Users
-              = form_for(Search.new, html: {class: "pull-left form-search navbar-search"}) do |f|
-                .input-append
-                  = f.text_field(:query, class: "input-medium search-query")
-                  %button.btn{type: "submit"} Go
-            .pull-right
-              %ul.nav
-                - if user_signed_in?
-                  %li
-                    = link_to(edit_user_registration_path) do
-                      %i.icon-user
-                      = current_user.first_name
-                      = current_user.last_name
-                  %li{class: active_link_class(destroy_user_session_path)}
-                    = link_to(destroy_user_session_path,
-                              :method => :delete) do
-                      %i.icon-signout
-                      Sign Out
-                - else
-                  %li{class: active_link_class(new_user_session_path)}
-                    = link_to(new_user_session_path) do
-                      %i.icon-signin
-                      Sign In
-                  %li{class: active_link_class(new_user_registration_path)}
-                    = link_to(new_user_registration_path) do
-                      %i.icon-plus-sign
-                      Sign Up
+                  = link_to("Users", users_path)
+
+          %form.navbar-form.navbar-left{role: "search"}
+            .form-group
+              %input.form-control{type: "text", placeholder: "Search"}
+            %button.btn.btn-default{type: "submit"} Submit
+          %ul.nav.navbar-nav.navbar-right
+            - unless user_signed_in?
+              %li
+                = link_to("Sign up", new_user_registration_path)
+            %li
+              - if user_signed_in?
+                = link_to("Sign Out", destroy_user_session_path)
+              - else
+                = link_to("Sign In", new_user_session_path)
 
     .container
-
       .row
-        .span9
-          = bootstrap_flash
+        .col-md-9
+          =# bootstrap_flash
           = yield
         - if content_for?(:sidebar)
-          .span3
+          .col-md-3
             = content_for(:sidebar)
 
-      %footer.muted
-        %p © Eric A Wollesen 2012
-    /
-      Javascripts
-      \==================================================
-    / Placed at the end of the document so the pages load faster
-    = javascript_include_tag "application"
+    %footer.text-muted.container-fluid.small
+      %p © Eric A Wollesen 2012&ndash;#{Time.now.year}
+    = javascript_include_tag("application")

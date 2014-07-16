@@ -11,7 +11,7 @@
     yellow background. Subjects that you can access due to a veil pass are
     indicated by a key icon
     = succeed(".") do
-      %i.icon-key
+      = fa_icon("key")
     Please use caution when sharing restricted information with other players.
 
 %h4
@@ -27,6 +27,6 @@
       \- #{vp.user.name}
     - if vp.includes_attachments
       %abbr{title: "This veil pass includes attachments.", rel: "tooltip"}
-        %i.icon-paper-clip
+        = fa_icon("paper-clip")
   - if @veil_passes.empty?
     %li No veil passes found

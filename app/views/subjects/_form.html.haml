@@ -1,90 +1,45 @@
-= form_for @subject, html: {multipart: true, class: "form-horizontal"} do |f|
+= simple_form_for(@subject, wrapper: :vertical_form, html: {role: "form"}, wrapper_mappings: {select: :vertical_select, boolean: :vertical_boolean}) do |f|
+  = f.error_notification
+
   %fieldset
-    .control-group
-      = f.label :name, :class => 'control-label'
-      .controls
-        = f.text_field :name, :class => 'text_field'
-    .control-group
-      = f.label :text, :class => 'control-label'
-      .controls
-        = f.text_area :text, :class => 'text_area', :cols => 80, :rows => 12
+    = f.input :name
+    = f.input :text, input_html: {rows: 10}
     - unless @subject.new_record?
-      .control-group
-        = f.label :permalink, :class => 'control-label'
-        .controls
-          = f.text_field :permalink, :class => 'text_field'
-    .control-group
-      .controls
-        %label.checkbox{for: "subject_dm_only"}
-          = f.check_box :dm_only
-          DM only
+      = f.input :permalink
+    = f.input :dm_only, label: "DM only"
 
   %fieldset
     %legend Attachments
     - @subject.attachments.each do |attachment|
-      = f.fields_for :attachments, attachment do |ff|
-        .control-group
+      = simple_fields_for(:attachments,
+                          wrapper_mappings: {boolean: :vertical_boolean}) do |ff|
+        = ff.label :_destroy do
           - if attachment.image?
-            = ff.label :_destroy, :class => "control-label" do
-              = image_tag(attachment.attachment.micro.url)
+            = image_tag(attachment.attachment.micro.url)
           - else
-            = ff.label :_destroy, :class => "control-label" do
-              = File.basename(attachment.attachment.path)
-          .controls
-            %label.checkbox
-              = ff.check_box :dm_only
-              DM only
-          .controls
-            %label.checkbox
-              = ff.check_box :_destroy
-              Delete
+            = File.basename(attachment.attachment.path)
+        = ff.input :dm_only, label: "DM only"
+        = ff.input :_destroy, as: :boolean, label: "Delete"
 
-    = f.fields_for :attachments, @subject.attachments.new do |ff|
-      .control-group
-        = ff.label :attachment, "New Attachment", :class => "control-label"
-        .controls
-          .fileupload.fileupload-new{"data-provides" => "fileupload"}
-            .input-append
-              .uneditable-input
-                %i.icon-file.fileupload-exists
-                %span.fileupload-preview
-              %span.btn.btn-file
-                %span.fileupload-new
-                  Choose File
-                %span.fileupload-exists
-                  %i.icon-refresh
-                = ff.file_field :attachment
-              %a.btn.fileupload-exists{href: "#", "data-dismiss" => "fileupload"}
-                %i.icon-remove
-        .controls
-          %label.checkbox
-            = ff.check_box :dm_only
-            DM only
+    = simple_fields_for(:attachments,
+                        @subject.attachments.new,
+                        wrapper_mappings: {boolean: :vertical_boolean}) do |ff|
+      = ff.input :attachment, as: :file, wrapper: :vertical_file_input, label: "New attachment"
+      = ff.input :dm_only, label: "DM only"
+
   %fieldset
     %legend Veil Passes
-    - @subject.veil_passes.joins(:user).order("users.first_name, users.last_name").each do |vp|
-      = f.fields_for :veil_passes, vp do |ff|
-        .control-group
-          .controls
-            %label.checkbox
-              = ff.check_box :includes_attachments
-              Includes attachments
-          = ff.label :_destroy, vp.user_name, class: "control-label"
-          .controls
-            %label.checkbox
-              = ff.check_box :_destroy
-              Delete
+    = f.simple_fields_for :veil_passes,
+                          wrapper_mappings: {boolean: :vertical_boolean} do |ff|
+      = ff.label ff.object.user_name, class: "text-capitalize"
+      = ff.input :includes_attachments, as: :boolean
+      = ff.input :_destroy, as: :boolean, label: "Delete"
 
-    = f.fields_for :veil_passes, @subject.veil_passes.new do |ff|
-      .control-group
-        .controls
-          %label.checkbox
-            = ff.check_box :includes_attachments
-            Includes attachments
-        = ff.label :user_id, "New Veil Pass", :class => "control-label"
-        .controls
-          = ff.select(:user_id, User.pcs.order(:first_name, :last_name).map {|u| [u.name, u.id]}, :include_blank => true)
+    = f.simple_fields_for :veil_passes,
+                          @subject.veil_passes.new,
+                          wrapper_mappings: {boolean: :vertical_boolean} do |ff|
+      = ff.input :user_id, collection: veil_pass_user_ids, include_blank: true, label: "New Veil Pass"
+      = ff.input :includes_attachments
 
-  .form-actions
-    = f.submit nil, :class => 'btn btn-primary'
+    = f.button :submit
     = link_to "Cancel", @subject.new_record? ? subjects_path : @subject, class: "btn btn-link"

@@ -57,12 +57,8 @@ class SubjectsController < ApplicationController
   def subject_params
     params.require(:subject)
       .permit(:name, :text, :permalink, :dm_only,
-              {veil_passes_attributss: [:id, :subject_id, :user_id, :includes_attachments]},
-              {attachments_attributes: [:id, :attachment, :attachment_cache, :dm_only]})
-
-    #.permit(:artist_id, :mood_list, :notes, :obtained, :released, :tag_list,
-    #:title, {media_attributes: [:id, :name, :position, :format, :medium,
-    #{songs_attributes: [:id, :position, :title, :disabled, :time]}]})
+              {veil_passes_attributes: [:id, :subject_id, :user_id, :includes_attachments, :_destroy]},
+              {attachments_attributes: [:id, :attachment, :attachment_cache, :dm_only, :_destroy]})
   end
 
 end

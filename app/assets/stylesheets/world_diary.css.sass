@@ -1,46 +1,18 @@
-@import "compass/css3/border-radius"
-@import "compass/css3/opacity"
-
-$bs_small: 85%
-$bs_muted: #999
-$bs_alert: #B94A48
-$bs_alert_success: #DFF0D8
-$bs_alert_warning: #FCF8E3
-$bs_alert_info: #D9EDF7
-
-
-footer
-  margin-top: 50px
-
-h1, h2, h3, h4, h5, h6,
-button, input[type=button], input[type=submit],
-.btn
-  text-transform: capitalize
-
-.page-header
-  margin-top: 0
-
-h1.title
-  margin: 0
-
-textarea
-  width: 500px
-
-.dm
-  background-color: $bs_alert_info
-
-.vp
-  background-color: $bs_alert_warning
-
 a[href*='subjects/new?']
   color: red
 
 footer
-  font-size: $bs_small
-  color: $bs_muted
+  margin-top: 50px
 
-a.action-danger
-  color: $bs_alert
+q
+  &:before
+    content: "“"
+  &:after
+    content: "”"
+
+td, th
+  &.numeric
+    text-align: right
 
 ul.inline
   list-style: none
@@ -57,6 +29,7 @@ ul.inline
     &:last-child
       padding-right: 0
 
+
 .attachment-overlay-dm-only
   position: relative
 
@@ -69,19 +42,9 @@ ul.inline
     right: 4px
     bottom: 5px
 
-td, th
-  &.numeric
-    text-align: right
 
-.comments
-  font-size: $bs_small
-  line-height: $bs_small
+.dm
+  background-color: $state-info-bg
 
-.comment-body
-  font-style: italic
-
-q
-  &:before
-    content: "“"
-  &:after
-    content: "”"
+.vp
+  background-color: $state-warning-bg
