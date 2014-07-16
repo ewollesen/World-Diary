@@ -1,31 +1,9 @@
 = devise_error_messages!
-.control-group
-  = form.label :first_name, class: "control-label"
-  .controls
-    = form.text_field :first_name, placeholder: "First"
-.control-group
-  = form.label :last_name, class: "control-label"
-  .controls
-    = form.text_field :last_name, placeholder: "Last"
-.control-group
-  = form.label :email, class: "control-label"
-  .controls
-    = form.email_field :email, placeholder: "email"
-.control-group
-  = form.label :password, class: "control-label"
-  .controls
-    = form.password_field :password
-    - unless form.object.new_record?
-      .help-inline
-        Leave blank if you don't want to change it.
-.control-group
-  = form.label :password_confirmation, class: "control-label"
-  .controls
-    = form.password_field :password_confirmation
+
+= form.input :first_name, placeholder: "First"
+= form.input :last_name, placeholder: "Last"
+= form.input :email, placeholder: "email"
+= form.input :password, hint: form.object.new_record? ? "" : "Leave blank if you don't want to change it."
+= form.input :password_confirmation
 - unless form.object.new_record?
-  .control-group
-    = form.label :current_password, class: "control-label"
-    .controls
-      = form.password_field :current_password
-      .help-inline
-        We need your current password to confirm your changes.
+  = form.input :current_password, hint: "We need your current password to confirm your changes."
