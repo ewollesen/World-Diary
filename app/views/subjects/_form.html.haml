@@ -37,5 +37,5 @@
       = ff.input :user_id, collection: veil_pass_user_ids, include_blank: true, label: "New Veil Pass"
       = ff.input :includes_attachments
 
-    = f.button :submit
+    = f.button :submit, "Update", class: "btn-primary"
     = link_to "Cancel", @subject.new_record? ? subjects_path : @subject, class: "btn btn-link"
