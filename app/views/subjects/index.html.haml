@@ -8,6 +8,7 @@
         = list_of(group) do |subject|
           = link_to(subject) do
             = subject.name
+          = attachment_icon(subject)
           = context_icon(subject)
 
 = content_for(:sidebar) do

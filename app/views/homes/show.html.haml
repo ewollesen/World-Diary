@@ -20,4 +20,5 @@ residing in a fictional role playing game universe.
       %ol{start: @updated_subjects.index(group.first).to_i + 1}
         = list_of(group) do |subject|
           = link_to(subject.name, subject, title: time_ago_in_words(subject.updated_at) + " ago", rel: "tooltip")
+          = attachment_icon(subject)
           = context_icon(subject)

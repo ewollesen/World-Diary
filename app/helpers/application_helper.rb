@@ -43,6 +43,13 @@ module ApplicationHelper
     end.html_safe
   end
 
+  def attachment_icon(subject)
+    if subject.attachments.present? &&
+       subject.attachments.any? {|a| !a.dm_only? || a.authorized_user?(current_user || User.new)}
+      fa_icon("paperclip")
+    end
+  end
+
   def context_icon(subject)
     user = current_user || User.new
 

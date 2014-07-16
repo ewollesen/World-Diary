@@ -10,4 +10,5 @@
   = list_of(@search.results) do |subject|
     = link_to(subject) do
       = subject.name
-      = context_icon(subject)
+    = attachment_icon(subject)
+    = context_icon(subject)

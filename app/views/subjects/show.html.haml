@@ -75,7 +75,7 @@
         = vp.user_name
         - if vp.includes_attachments
           %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
-            = fa_icon("paper-clip")
+            = fa_icon("paperclip")
 
 - if can?(:update, Subject) || can?(:destroy, Subject)
   = content_for(:sidebar) do
