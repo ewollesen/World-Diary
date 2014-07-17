@@ -90,16 +90,6 @@ module ApplicationHelper
           end
         end
       end
-
-        # content_tag("div", class: "panel panel-default") do
-        #   content_tag("div", class: "panel-heading") do
-        #     content_tag("h4") do
-        #       #fa_icon("list-ul") + " " +
-        #       "Table of Contents".html_safe
-        #     end
-        #   end + content_tag("div", toc.html_safe, class: "panel-body")
-        # end
-      # end
     end
   end
 
