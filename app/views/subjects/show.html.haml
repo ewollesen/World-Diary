@@ -38,16 +38,20 @@
       %ul.nav
         -# Use @attachments, which is restricted by dm only / veil passes
         = list_of(@attachments) do |attachment|
-          = link_to(attachment.attachment.url) do
+          .thumbnail
             - if attachment.image? # TODO set default url
               = attachment_image_overlay(attachment) do
-                / FIXME img-polaroid doesn't exist any longer?
-                = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
-            %span<>
-              = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
-          - unless attachment.image?
-            = context_icon(attachment)
-          = attachment_metadata(attachment)
+                = link_to(attachment.attachment.url) do
+                  / FIXME img-polaroid doesn't exist any longer?
+                  = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
+            .caption
+              %div
+                = link_to(attachment.attachment.url) do
+                  = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
+                - unless attachment.image?
+                  = context_icon(attachment)
+              %div
+                = attachment_metadata(attachment)
 
   %li
     %h4 Changes

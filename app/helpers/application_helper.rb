@@ -104,7 +104,7 @@ module ApplicationHelper
   def attachment_metadata(attachment)
     bits = []
 
-    content_tag("small", :class => "muted") do
+    content_tag("small", :class => "text-muted") do
       if attachment.file_size
         bits << number_to_human_size(attachment.file_size)
       end
@@ -137,9 +137,9 @@ module ApplicationHelper
   private
 
   def attachment_image_overlay_inner(attachment, &block)
-    content_tag(:div, :class => "attachment-overlay-dm-only") do
-      capture {yield} +
-        content_tag(:div, context_icon(attachment), :class => "overlay-icons")
+    content_tag(:div, class: "attachment-overlay-dm-only") do
+      content_tag(:div, context_icon(attachment), class: "overlay-icons") +
+        capture {yield}
     end
   end
 
