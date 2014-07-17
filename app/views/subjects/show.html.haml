@@ -78,10 +78,11 @@
       %h4 Veil Passes
       %ul.nav
         = list_of(@veil_passes.joins(:user).order("users.first_name, users.last_name")) do |vp|
-          = vp.user_name
-          - if vp.includes_attachments
-            %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
-              = fa_icon("paperclip")
+          .nav-text
+            = vp.user_name
+            - if vp.includes_attachments
+              %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
+                = fa_icon("paperclip")
 
 - if can?(:update, Subject) || can?(:destroy, Subject)
   = content_for(:sidebar) do
