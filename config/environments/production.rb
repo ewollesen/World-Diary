@@ -91,6 +91,6 @@ Rails.application.configure do
                         email: {
                           email_prefix: "[WD] ",
                           sender_address: %{"notifier" <notifier@wd.xmtp.net>},
-                          exception_recipients: %w{wd@localhost}
+                          exception_recipients: %w{ericw@pain.xmtp.net}
                         }
 end
