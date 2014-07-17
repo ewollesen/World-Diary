@@ -6,7 +6,6 @@
     %ul.list-unstyled
       = list_of(@recent_subjects) do |subject, time|
         = link_to(subject.name, subject, {title: time_ago_in_words(time || Time.at(0)) + " ago", rel: "tooltip"})
-        = context_icon(subject)
 
 !!! 5
 %html(lang="en")
