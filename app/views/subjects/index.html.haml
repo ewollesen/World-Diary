@@ -13,12 +13,13 @@
 
 = content_for(:sidebar) do
   - if can?(:create, Subject)
-    %h4
-      = fa_icon("wrench")
-      Actions
-    %ul.list-unstyled
-      - if can?(:create, Subject)
-        %li
-          = link_to(new_subject_path, accesskey: "n") do
-            = fa_icon("plus")
-            New Subject
+    .panel.panel-default
+      .panel-heading
+        %h4
+          Actions
+      .panel-body
+        %ul.list-unstyled
+          %li
+            = link_to(new_subject_path, accesskey: "n") do
+              = fa_icon("plus")
+              New Subject

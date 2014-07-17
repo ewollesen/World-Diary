@@ -32,67 +32,68 @@
   = @subject.name
 
 = content_for(:sidebar) do
-  -# Use @attachments, which is restricted by dm only / veil passes
-  - @attachments.each do |attachment|
-    - if attachment == @subject.attachments.first
-      %h4
-        = fa_icon("paperclip")
-        Attachments
-    = link_to(attachment.attachment.url) do
-      - if attachment.image? # TODO set default url
-        = attachment_image_overlay(attachment) do
-          = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
-      %span<>
-        = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
-    - unless attachment.image?
-      = context_icon(attachment)
-    = attachment_metadata(attachment)
+  - if @attachments.present?
+    %li
+      %h4 Attachments
+      %ul.nav
+        -# Use @attachments, which is restricted by dm only / veil passes
+        = list_of(@attachments) do |attachment|
+          = link_to(attachment.attachment.url) do
+            - if attachment.image? # TODO set default url
+              = attachment_image_overlay(attachment) do
+                / FIXME img-polaroid doesn't exist any longer?
+                = image_tag(attachment.attachment.thumb.url, :class => "img-polaroid")
+            %span<>
+              = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
+          - unless attachment.image?
+            = context_icon(attachment)
+          = attachment_metadata(attachment)
 
-    - unless attachment == @subject.attachments.last
-      %div{style: "margin-top: 4px"}
-
-  %h4
-    = fa_icon("clock-o")
-    Changes
-  .row
-    .col-md-3 Updated:
-    .col-md-9{title: @subject.updated_at.year}
-      = @subject.updated_at.to_s(:short)
-  - if can? :manage, @subject
-    .row
-      .col-md-3 Created:
-      .col-md-9{title: @subject.created_at.year}
-        = @subject.created_at.to_s(:short)
+  %li
+    %h4 Changes
+    / this should probably be a table
+    %ul.nav
+      - if can? :manage, @subject
+        %li
+          .nav-text.row
+            %span.col-md-3
+              Created:
+            %span.col-md-9{title: @subject.created_at.year}
+              = @subject.created_at.to_s(:short)
+      %li
+        .nav-text.row
+          %span.col-md-3
+            Updated:
+          %span.col-md-9{title: @subject.updated_at.year}
+            = @subject.updated_at.to_s(:short)
 
 -# Use @veil_passes, which is properly restricted by authorization
 - if @veil_passes.present?
   = content_for(:sidebar) do
-    %h4
-      = fa_icon("key")
-      Veil Passes
-    %ul
-      = list_of(@veil_passes.joins(:user).order("users.first_name, users.last_name")) do |vp|
-        = vp.user_name
-        - if vp.includes_attachments
-          %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
-            = fa_icon("paperclip")
+    %li
+      %h4 Veil Passes
+      %ul.nav
+        = list_of(@veil_passes.joins(:user).order("users.first_name, users.last_name")) do |vp|
+          = vp.user_name
+          - if vp.includes_attachments
+            %abbr{rel: "tooltip", title: "This veil pass includes attachments."}
+              = fa_icon("paperclip")
 
 - if can?(:update, Subject) || can?(:destroy, Subject)
   = content_for(:sidebar) do
-    %h4
-      = fa_icon("wrench")
-      Actions
-    %ul.list-unstyled
-      - if can?(:update, Subject)
-        %li
-          = link_to(edit_subject_path(@subject), accesskey: "e") do
-            = fa_icon("pencil")
-            Edit Subject
-      - if can?(:destroy, Subject)
-        %li
-          = link_to(subject_path(@subject),
-                    :method => :delete,
-                    :class => "action-danger",
-                    :data => {:confirm => "Are you sure?"}) do
-            = fa_icon("times")
-            Delete Subject
+    %li
+      %h4 Actions
+      %ul.nav
+        - if can?(:update, Subject)
+          %li
+            = link_to(edit_subject_path(@subject), accesskey: "e") do
+              = fa_icon("pencil")
+              Edit
+        - if can?(:destroy, Subject)
+          %li
+            = link_to(subject_path(@subject),
+                      :method => :delete,
+                      :class => "action-danger",
+                      :data => {:confirm => "Are you sure?"}) do
+              = fa_icon("times")
+              Delete

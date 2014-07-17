@@ -1,10 +1,24 @@
 - if @recent_subjects.present?
   = content_for(:sidebar) do
+    %li
+      %h4.hidden-md.hidden-lg
+        Recent Subjects
+      %h4.hidden-xs.hidden-sm
+        Recently Visited Subjects
+      %ul.nav
+        = list_of(@recent_subjects) do |subject, time|
+          = link_to(subject.name, subject)
+
+  /
     %h4
-      Recent Subjects
+      .hidden-md.hidden-lg
+        Recent Subjects
+      .hidden-xs.hidden-sm
+        Recently Visited Subjects
     %ul.list-unstyled
       = list_of(@recent_subjects) do |subject, time|
         = link_to(subject.name, subject)
+
 
 !!! 5
 %html(lang="en")
@@ -74,11 +88,11 @@
     .container
       .row
         .col-md-9
-          =# bootstrap_flash
           = yield
         - if content_for?(:sidebar)
           .col-md-3
-            = content_for(:sidebar)
+            %ul.nav
+              = content_for(:sidebar)
 
     %footer.text-muted.container-fluid.small
       %p © Eric A Wollesen 2012&ndash;#{Time.now.year}

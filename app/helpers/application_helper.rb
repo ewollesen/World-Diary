@@ -60,6 +60,16 @@ module ApplicationHelper
     end
   end
 
+  def locked_icon
+    fa_icon("lock", class: "text-muted")
+  end
+
+  def unlocked_icon
+    content_tag("abbr", title: "You have a veil pass for this subject.") do
+      fa_icon("unlock")
+    end
+  end
+
   def render_wiki(text)
     renderer = Redcarpet::Render::XHTML.new(with_toc_data: true)
     x = WorldWiki::WikiParser.new.parse(text).render
@@ -73,20 +83,21 @@ module ApplicationHelper
     toc = Redcarpet::Markdown.new(renderer).render(text)
     if toc.present?
       content_for(:sidebar) do
-        content_tag("h4") do
-          fa_icon("list-ul") + " " + "Table of Contents ".html_safe
-        end + toc.html_safe
+        content_tag("li") do
+          content_tag("h4", "Table of Contents") +
+            toc.html_safe
+        end
       end
-    end
-  end
 
-  def locked_icon
-    fa_icon("lock")
-  end
-
-  def unlocked_icon
-    content_tag("abbr", title: "You have a veil pass for this subject.") do
-      fa_icon("unlock")
+        # content_tag("div", class: "panel panel-default") do
+        #   content_tag("div", class: "panel-heading") do
+        #     content_tag("h4") do
+        #       #fa_icon("list-ul") + " " +
+        #       "Table of Contents".html_safe
+        #     end
+        #   end + content_tag("div", toc.html_safe, class: "panel-body")
+        # end
+      # end
     end
   end
 
