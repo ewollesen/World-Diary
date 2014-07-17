@@ -1,7 +1,6 @@
 - if @recent_subjects.present?
   = content_for(:sidebar) do
     %h4
-      = fa_icon("file")
       Recent Subjects
     %ul.list-unstyled
       = list_of(@recent_subjects) do |subject, time|
