@@ -1,3 +1,4 @@
+-# -*- coding: utf-8 -*-
 - if @recent_subjects.present?
   = content_for(:sidebar) do
     %li
@@ -42,13 +43,16 @@
         #wd-navbar-collapse.collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li{class: active_link_class(subjects_path)}
-              = link_to("Subjects", subjects_path)
+              = link_to(subjects_path) do
+                Subjects
             - if user_signed_in?
               %li{class: active_link_class(veil_passes_path)}
-                = link_to("Veil Passes", veil_passes_path)
+                = link_to(veil_passes_path) do
+                  Veil Passes
               - if current_user.dm?
                 %li{class: active_link_class(users_path)}
-                  = link_to("Users", users_path)
+                  = link_to(users_path) do
+                    Users
 
           = simple_form_for(@search || Search.new,
                             html: {class: "navbar-form navbar-left"}) do |f|
@@ -59,18 +63,22 @@
               %span.input-group-btn
                 = f.button(:submit, "Go")
 
+
           %ul.nav.navbar-nav.navbar-right
-            - if user_signed_in?
-              %li
-                = link_to current_user.name, edit_user_registration_path, class: "navbar-link"
-            - else
-              %li
-                = link_to("Sign up", new_user_registration_path)
             %li
               - if user_signed_in?
-                = link_to("Sign Out", destroy_user_session_path, method: "delete")
+                = link_to edit_user_registration_path, class: "navbar-link" do
+                  = current_user.short_name
               - else
-                = link_to("Sign In", new_user_session_path)
+                = link_to(new_user_registration_path) do
+                  Sign Up
+            %li
+              - if user_signed_in?
+                = link_to(destroy_user_session_path, method: "delete") do
+                  Sign Out
+              - else
+                = link_to(new_user_session_path) do
+                  Sign In
 
 
     .container
