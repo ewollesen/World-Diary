@@ -18,19 +18,6 @@
             %em
               = time_ago_in_words(comment.created_at).capitalize
               ago.
-
-
-    -#  .media
-        = fa_icon("quote-left", class: "media-object pull-left")
-        .media-body
-          %h5.media-heading
-            = succeed(":") do
-              = comment.user_short_name
-          %div
-            = comment.comment
-            %em.small.text-muted
-              = time_ago_in_words(comment.created_at).capitalize
-              ago.
     - unless @subject.comments.present?
       %em No comments found
 
