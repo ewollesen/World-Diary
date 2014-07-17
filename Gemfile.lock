@@ -93,6 +93,9 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    exception_notification (4.0.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     execjs (2.2.1)
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
@@ -252,6 +255,7 @@ DEPENDENCIES
   compass-rails
   database_cleaner
   devise
+  exception_notification
   font-awesome-rails
   haml-rails
   jquery-rails
