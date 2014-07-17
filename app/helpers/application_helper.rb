@@ -85,7 +85,9 @@ module ApplicationHelper
       content_for(:sidebar) do
         content_tag("li") do
           content_tag("h4", "Table of Contents") +
-            toc.html_safe
+            content_tag("div", class: "nav-toc") do
+            toc.sub("<ul>", "<ul class=\"nav-toc\">").html_safe
+          end
         end
       end
 
