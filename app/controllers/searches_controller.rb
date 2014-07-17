@@ -6,6 +6,10 @@ class SearchesController < ApplicationController
     render action: :show
   end
 
+  def show
+    @search = Search.new(search_params).execute(current_user || User.new)
+  end
+
 
   protected
 
