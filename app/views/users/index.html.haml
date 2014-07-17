@@ -1,14 +1,14 @@
 .page-header
   %h1 Users
 
-%table.table-condensed.table-striped
+%table.table.table-striped.table-responsive
   %thead
     %tr
       %th #.
       %th Name
       %th Email
       %th Last Seen
-      %th Sign In Count
+      %th.text-right Sign In Count
   %tbody
     - @users.each_with_index do |user, index|
       %tr
