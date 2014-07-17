@@ -84,6 +84,9 @@ Rails.application.configure do
   Rails.application.routes.default_url_options = {host: "wd.xmtp.net"}
   config.action_mailer.default_url_options = {host: "wd.xmtp.net"}
 
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+
   config.middleware.use ExceptionNotification::Rack,
                         email: {
                           email_prefix: "[WD] ",
