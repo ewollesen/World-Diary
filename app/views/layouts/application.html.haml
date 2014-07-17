@@ -9,16 +9,6 @@
         = list_of(@recent_subjects) do |subject, time|
           = link_to(subject.name, subject)
 
-  /
-    %h4
-      .hidden-md.hidden-lg
-        Recent Subjects
-      .hidden-xs.hidden-sm
-        Recently Visited Subjects
-    %ul.list-unstyled
-      = list_of(@recent_subjects) do |subject, time|
-        = link_to(subject.name, subject)
-
 
 !!! 5
 %html(lang="en")
