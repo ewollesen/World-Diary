@@ -73,7 +73,7 @@
   - if @subject.tags.present?
     %li
       %h4 Tags
-      %ul.tags.list-inline
+      %ul.list-inline.tags-list
         = list_of @subject.tags do |tag|
           = link_to(tag_path(tag)) do
             = fa_icon("tag")
