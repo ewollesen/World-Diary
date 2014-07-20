@@ -13,10 +13,11 @@
   which will allow you to see otherwise restricted information pertaining to
   the subjects detailed within.
 
-%h3 Recently Updated Subjects
-.row
-  - @updated_subjects.in_groups(3, false) do |group|
-    .col-md-4
-      %ol{start: @updated_subjects.index(group.first).to_i + 1}
-        = list_of(group) do |subject|
-          = link_to(subject.name, subject)
+- if @updated_subjects.present?
+  %h3 Recently Updated Subjects
+  .row
+    - @updated_subjects.in_groups(3, false) do |group|
+      .col-md-4
+        %ol{start: @updated_subjects.index(group.first).to_i + 1}
+          = list_of(group) do |subject|
+            = link_to(subject.name, subject)
