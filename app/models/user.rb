@@ -22,7 +22,6 @@ class User < ActiveRecord::Base
     first_name + " " + last_name
   end
 
-
   private
 
   def first_user_is_admin

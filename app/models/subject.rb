@@ -2,6 +2,7 @@ class Subject < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
   acts_as_commentable
+  acts_as_taggable
 
   has_permalink
 

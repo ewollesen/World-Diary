@@ -57,7 +57,7 @@ class SubjectsController < ApplicationController
   def subject_params
     params
       .require(:subject)
-      .permit(:name, :text, :permalink, :dm_only,
+      .permit(:name, :text, :permalink, :dm_only, :tag_list,
               {veil_passes_attributes: [:id,
                                         :subject_id,
                                         :user_id,

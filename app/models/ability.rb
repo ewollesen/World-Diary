@@ -46,7 +46,6 @@ EOF
       end
       can :read, Subject, :dm_only => false
 
-
       # https://github.com/ryanb/cancan/issues/213
       ugly_sql = <<EOF
 veil_passes.id IN (
@@ -79,6 +78,7 @@ EOF
         can :manage, Comment, user_id: user.id
       end
       can :read, Comment
+      can :read, ActsAsTaggableOn::Tag
     end
   end
 

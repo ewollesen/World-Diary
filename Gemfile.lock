@@ -43,6 +43,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (3.2.1)
+      actionpack (>= 3, < 5)
+      activerecord (>= 3, < 5)
     acts_as_commentable (3.0.1)
     addressable (2.3.6)
     ansi (1.4.3)
@@ -249,6 +252,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on
   acts_as_commentable (= 3.0.1)
   autoprefixer-rails
   better_errors

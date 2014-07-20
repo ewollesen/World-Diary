@@ -70,6 +70,14 @@
             Updated:
           %span.col-md-9{title: @subject.updated_at.year}
             = @subject.updated_at.to_s(:short)
+  - if @subject.tags.present?
+    %li
+      %h4 Tags
+      %ul.tags.list-inline
+        = list_of @subject.tags do |tag|
+          = link_to(tag_path(tag)) do
+            = fa_icon("tag")
+            = tag
 
 -# Use @veil_passes, which is properly restricted by authorization
 - if @veil_passes.present?

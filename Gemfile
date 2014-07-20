@@ -4,6 +4,7 @@ source "http://gems.xmtp.net"
 gem "rails", "4.1.1"
 
 gem "acts_as_commentable", "3.0.1"
+gem "acts-as-taggable-on"
 gem "autoprefixer-rails"
 gem "bootstrap-sass"
 gem "cancancan", github: "CanCanCommunity/cancancan", ref: "1cdc055"
