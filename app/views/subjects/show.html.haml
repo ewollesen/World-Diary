@@ -55,21 +55,19 @@
 
   %li
     %h4 Changes
-    / this should probably be a table
-    %ul.nav
+    %table.subject-changes
       - if can? :manage, @subject
-        %li
-          .nav-text.row
-            %span.col-md-3
-              Created:
-            %span.col-md-9{title: @subject.created_at.year}
+        %tr
+          %th Created:
+          %td
+            %span{title: @subject.created_at.year}
               = @subject.created_at.to_s(:short)
-      %li
-        .nav-text.row
-          %span.col-md-3
-            Updated:
-          %span.col-md-9{title: @subject.updated_at.year}
+      %tr
+        %th Updated:
+        %td
+          %span{title: @subject.updated_at.year}
             = @subject.updated_at.to_s(:short)
+
   - if @subject.tags.present?
     %li
       %h4 Tags
