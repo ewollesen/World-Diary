@@ -65,6 +65,7 @@ class SubjectsController < ApplicationController
                                         :_destroy]},
               {attachments_attributes: [:id,
                                         :attachment,
+                                        :remote_attachment_url,
                                         :attachment_cache,
                                         :dm_only,
                                         :_destroy]})

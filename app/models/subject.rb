@@ -13,7 +13,7 @@ class Subject < ActiveRecord::Base
   class_attribute :specifier
 
   has_many :attachments, :dependent => :destroy
-  accepts_nested_attributes_for :attachments, :allow_destroy => true, :reject_if => proc {|attributes| attributes["id"].blank? && attributes["attachment"].blank?}
+  accepts_nested_attributes_for :attachments, :allow_destroy => true, :reject_if => proc {|attributes| attributes["id"].blank? && attributes["attachment"].blank? && attributes["remote_attachment_url"].blank?}
 
   has_many :veil_passes, :dependent => :destroy
   accepts_nested_attributes_for :veil_passes, :allow_destroy => true, :reject_if => proc {|attributes| attributes["id"].blank? && attributes["user_id"].blank?}
