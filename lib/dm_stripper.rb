@@ -34,14 +34,14 @@ module DmStripper
         n.swap("<span class=\"vp\">#{n.text}</span>")
       end
     end
-    doc.to_xml
+    doc.text
   end
 
   def self.modify_for_user(text)
     doc = Nokogiri::XML::fragment(text)
     (doc/"dm").each(&:remove)
     (doc/"vp").each(&:remove)
-    doc.to_xml
+    doc.text
   end
 
   def self.modify_for_vp(text)
@@ -54,7 +54,7 @@ module DmStripper
         n.swap("<span class=\"vp\">#{n.content}</span>")
       end
     end
-    doc.to_xml
+    doc.text
   end
 
 end
