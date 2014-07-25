@@ -9,6 +9,8 @@
           = link_to(subject) do
             = subject.name
 
+
+
 = content_for(:sidebar) do
   - if can?(:create, Subject)
     %li
@@ -19,3 +21,5 @@
           = link_to(new_subject_path, accesskey: "n") do
             = fa_icon("plus")
             New Subject
+
+= render "selected_tags_links"

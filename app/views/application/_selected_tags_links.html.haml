@@ -1,0 +1,14 @@
+= content_for(:sidebar) do
+  %li
+    %h4
+      %span.visible-md-inline.visible-lg-inline
+        Selected
+      Tags
+    %ul.nav
+      - ["People", "Places", "Things"].each do |what|
+        - tag = ActsAsTaggableOn::Tag.where(name: what).first
+        - if tag
+          %li
+            = link_to(tag_path(tag)) do
+              = fa_icon("tag")
+              = what
