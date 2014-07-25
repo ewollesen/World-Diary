@@ -75,7 +75,7 @@ module ApplicationHelper
     x = WorldWiki::WikiParser.new.parse(text).render
     y = DmStripper.strip(x, current_user, @subject.authorized_users.include?(current_user))
     render_wiki_toc(text)
-    Redcarpet::Markdown.new(renderer).render(y).html_safe
+    Redcarpet::Markdown.new(renderer, footnotes: true).render(y).html_safe
   end
 
   def render_wiki_toc(text)

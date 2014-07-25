@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-source "http://gems.xmtp.net"
+source "https://gems.xmtp.net"
 
 gem "rails", "4.1.1"
 
