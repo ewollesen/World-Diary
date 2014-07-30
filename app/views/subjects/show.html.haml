@@ -47,7 +47,7 @@
             .caption
               %div
                 = link_to(attachment.attachment.url) do
-                  = File.basename(attachment.attachment.path, File.extname(attachment.attachment.path)).humanize
+                  = attachment.caption
                 - unless attachment.image?
                   = context_icon(attachment)
               %div

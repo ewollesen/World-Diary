@@ -18,6 +18,7 @@
             = image_tag(ff.object.attachment.url("micro"))
         - else
           = File.basename(ff.object.attachment.path)
+      = ff.input :caption
       = ff.input :dm_only, label: "DM only"
       = ff.input :_destroy, as: :boolean, label: "Delete"
 
@@ -26,6 +27,7 @@
                           wrapper_mappings: {boolean: :vertical_boolean}) do |ff|
       = ff.input :attachment, as: :file, wrapper: :vertical_file_input, label: "New attachment"
       = ff.input :remote_attachment_url, label: "Attachment URL"
+      = ff.input :caption
       = ff.input :dm_only, label: "DM only"
 
   %fieldset

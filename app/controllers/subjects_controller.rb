@@ -67,6 +67,7 @@ class SubjectsController < ApplicationController
                                         :attachment,
                                         :remote_attachment_url,
                                         :attachment_cache,
+                                        :caption,
                                         :dm_only,
                                         :_destroy]})
   end

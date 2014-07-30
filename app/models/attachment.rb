@@ -10,6 +10,14 @@ class Attachment < ActiveRecord::Base
   has_many :authorized_users, :through => :veil_passes, :source => :user
 
 
+  def caption
+    if (cap = read_attribute("caption")).present?
+      cap
+    else
+      generate_caption
+    end
+  end
+
   def image?
     /^image\// === content_type
   end
@@ -20,6 +28,14 @@ class Attachment < ActiveRecord::Base
 
 
   private
+
+  def generate_caption
+    if attachment.path.present?
+      File.basename(attachment.path, File.extname(attachment.path)).humanize
+    else
+      "nil"
+    end
+  end
 
   def update_metadata
     if attachment.present? && attachment_changed?

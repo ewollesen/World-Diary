@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140720183234) do
+ActiveRecord::Schema.define(version: 20140730041532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140720183234) do
     t.integer "width"
     t.integer "height"
     t.boolean "dm_only",      default: true, null: false
+    t.string  "caption"
   end
 
   create_table "comments", force: true do |t|
