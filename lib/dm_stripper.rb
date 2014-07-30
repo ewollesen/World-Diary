@@ -8,53 +8,53 @@ module DmStripper
       modify_for_vp(text)
     else
       modify_for_user(text)
-    end
+    end.to_xml.gsub(/^&gt;(\s)/, ">\\1") # maintains markdown blockquotes
   end
 
 
   private
 
   def self.modify_for_dm(text)
-    doc = Nokogiri::XML::fragment(text)
-    (doc/"dm").each do |n|
-      if /[\r\n]/ === n
-        renderer = Redcarpet::Render::XHTML.new
-        md_text = Redcarpet::Markdown.new(renderer).render(n.text).html_safe
-        n.swap("<div class=\"dm\">#{md_text}</div>")
-      else
-        n.swap("<span class=\"dm\">#{n.text}</span>")
+    Nokogiri::XML::fragment(text).tap do |doc|
+      (doc/"dm").each do |n|
+        if /[\r\n]/ === n
+          renderer = Redcarpet::Render::XHTML.new
+          md_text = Redcarpet::Markdown.new(renderer).render(n.text).html_safe
+          n.swap("<div class=\"dm\">#{md_text}</div>")
+        else
+          n.swap("<span class=\"dm\">#{n.text}</span>")
+        end
+      end
+      (doc/"vp").each do |n|
+        if /[\r\n]/ === n
+          renderer = Redcarpet::Render::XHTML.new
+          md_text = Redcarpet::Markdown.new(renderer).render(n.text).html_safe
+          n.swap("<div class=\"vp\">#{md_text}</div>")
+        else
+          n.swap("<span class=\"vp\">#{n.text}</span>")
+        end
       end
     end
-    (doc/"vp").each do |n|
-      if /[\r\n]/ === n
-        renderer = Redcarpet::Render::XHTML.new
-        md_text = Redcarpet::Markdown.new(renderer).render(n.text).html_safe
-        n.swap("<div class=\"vp\">#{md_text}</div>")
-      else
-        n.swap("<span class=\"vp\">#{n.text}</span>")
-      end
-    end
-    doc.text
   end
 
   def self.modify_for_user(text)
-    doc = Nokogiri::XML::fragment(text)
-    (doc/"dm").each(&:remove)
-    (doc/"vp").each(&:remove)
-    doc.text
+    Nokogiri::XML::fragment(text).tap do |doc|
+      (doc/"dm").each(&:remove)
+      (doc/"vp").each(&:remove)
+    end
   end
 
   def self.modify_for_vp(text)
-    doc = Nokogiri::XML::fragment(text)
-    (doc/"dm").each(&:remove)
-    (doc/"vp").each do |n|
-      if /[\r\n]/ === n
-        n.swap("<div class=\"vp\">#{n.to_xml}</div>")
-      else
-        n.swap("<span class=\"vp\">#{n.content}</span>")
+    Nokogiri::XML::fragment(text).tap do |doc|
+      (doc/"dm").each(&:remove)
+      (doc/"vp").each do |n|
+        if /[\r\n]/ === n
+          n.swap("<div class=\"vp\">#{n.to_xml}</div>")
+        else
+          n.swap("<span class=\"vp\">#{n.content}</span>")
+        end
       end
     end
-    doc.text
   end
 
 end
