@@ -240,7 +240,7 @@ GEM
       vlad (>= 2.1.0)
     warden (1.2.3)
       rack (>= 1.0)
-    world_wiki (0.0.3)
+    world_wiki (0.0.4)
       activesupport
       redcarpet
       treetop
@@ -293,4 +293,4 @@ DEPENDENCIES
   vlad
   vlad-assets
   vlad-git
-  world_wiki
+  world_wiki (>= 0.0.4)

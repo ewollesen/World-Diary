@@ -26,7 +26,7 @@ gem "therubyracer", :platforms => :ruby
   gem "libv8"
 gem "turbolinks"
 gem "uglifier"
-gem "world_wiki"
+gem "world_wiki", ">= 0.0.4"
 
 gem "jquery-rails"
 
