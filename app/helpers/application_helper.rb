@@ -75,23 +75,30 @@ module ApplicationHelper
     stripped = DmStripper.strip(wiki_parsed,
                                 current_user,
                                 @subject.authorized_users.include?(current_user))
-    render_wiki_toc(text)
-    WdMarkdown.render(stripped)
+    render_wiki_toc(text) +
+      WdMarkdown.render(stripped)
   end
 
   def render_wiki_toc(text)
     renderer = Redcarpet::Render::HTML_TOC.new
     toc = Redcarpet::Markdown.new(renderer, quote: true).render(text)
+    toc_html = ""
 
     if toc.present?
-      content_for(:sidebar) do
-        content_tag("li") do
-          content_tag("h4", "Table of Contents") +
-            content_tag("div", class: "nav-toc") do
-            toc.sub("<ul>", "<ul class=\"nav-toc\">").html_safe
-          end
-        end
+      toc_html = content_tag("h4", "Table of Contents") +
+                 content_tag("div", class: "nav-toc") do
+        toc.sub("<ul>", "<ul class=\"nav-toc\">").html_safe
       end
+
+      content_for(:sidebar) do
+        content_tag("li", toc_html, :class => "hidden-xs hidden-sm")
+      end
+
+      content_tag("div", :class => "hidden-md hidden-lg") do
+        toc_html
+      end
+    else
+      "".html_safe
     end
   end
 
