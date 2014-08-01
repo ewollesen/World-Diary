@@ -71,16 +71,18 @@ module ApplicationHelper
   end
 
   def render_wiki(text)
-    renderer = Redcarpet::Render::XHTML.new(with_toc_data: true)
-    x = WorldWiki::WikiParser.new.parse(text).render
-    y = DmStripper.strip(x, current_user, @subject.authorized_users.include?(current_user))
+    wiki_parsed = WorldWiki::WikiParser.new.parse(text).render
+    stripped = DmStripper.strip(wiki_parsed,
+                                current_user,
+                                @subject.authorized_users.include?(current_user))
     render_wiki_toc(text)
-    Redcarpet::Markdown.new(renderer, footnotes: true).render(y).html_safe
+    WdMarkdown.render(stripped)
   end
 
   def render_wiki_toc(text)
     renderer = Redcarpet::Render::HTML_TOC.new
-    toc = Redcarpet::Markdown.new(renderer).render(text)
+    toc = Redcarpet::Markdown.new(renderer, quote: true).render(text)
+
     if toc.present?
       content_for(:sidebar) do
         content_tag("li") do

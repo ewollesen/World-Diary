@@ -17,3 +17,5 @@
 .rbenv-version
 
 public/uploads
+
+.sass-cache
