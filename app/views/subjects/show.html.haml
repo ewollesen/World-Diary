@@ -32,6 +32,7 @@
 = content_for(:title) do
   = @subject.name
 
+
 = content_for(:sidebar) do
   - if @attachments.present?
     %li
@@ -108,3 +109,16 @@
                       :data => {:confirm => "Are you sure?"}) do
               = fa_icon("times")
               Delete
+
+- if current_user.dm?
+  = content_for(:sidebar) do
+    %li
+      %h4
+        View As…
+      %ul.nav
+        %li
+          %a{href: "#", rel: "wiki_toggle", data: {target: []}} DM
+        %li
+          %a{href: "#", rel: "wiki_toggle", data: {target: ["dm"]}} Veil pass
+        %li
+          %a{href: "#", rel: "wiki_toggle", data: {target: ["vp", "dm"]}} Anonymous
