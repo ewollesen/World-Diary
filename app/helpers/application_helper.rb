@@ -75,8 +75,8 @@ module ApplicationHelper
     stripped = DmStripper.strip(wiki_parsed,
                                 current_user,
                                 @subject.authorized_users.include?(current_user))
-    render_wiki_toc(text) +
-      WdMarkdown.render(stripped)
+
+    render_wiki_toc(text) + WdMarkdown.render(stripped)
   end
 
   def render_wiki_toc(text)

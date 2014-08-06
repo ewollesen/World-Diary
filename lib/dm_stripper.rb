@@ -48,7 +48,7 @@ module DmStripper
     (doc/tag).each do |n|
       if /[\r\n]/ === n
         n.name = "div"
-        n.inner_html = WdMarkdown.render(n.inner_html)
+        # n.inner_html = WdMarkdown.render(n.inner_html)
       else
         n.name = "span"
       end
