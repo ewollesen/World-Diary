@@ -28,7 +28,7 @@
     %link{href: "/favicon.ico", rel: "shortcut icon"}
 
   %body
-    %nav.navbar.navbar-default{role: "navigation"}
+    %nav.navbar.navbar-default{role: "navigation", class: !Rails.env.production? ? "navbar-inverse" : nil}
       .container-fluid
         .navbar-header
           %button.navbar-toggle{type: "button",
