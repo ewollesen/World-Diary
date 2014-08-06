@@ -6,7 +6,7 @@ class Subject < ActiveRecord::Base
 
   has_permalink
 
-  validates :name, :uniqueness => true, :presence => true
+  validates :name, uniqueness: true, presence: true, format: {with: /\A[a-z0-9]/i}
   validates :permalink, :uniqueness => true, :presence => true
   validates :text, :presence => true
 

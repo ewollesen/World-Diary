@@ -48,11 +48,11 @@ module DmStripper
     (doc/tag).each do |n|
       if /[\r\n]/ === n
         n.name = "div"
-        # n.inner_html = WdMarkdown.render(n.inner_html)
       else
         n.name = "span"
       end
       n["class"] = ((n["class"] || "") + " #{tag}").strip
+      n["markdown"] ||= "1"
     end
   end
 end

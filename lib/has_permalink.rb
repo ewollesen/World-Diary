@@ -12,6 +12,9 @@ module HasPermalink
       end
 
       candidate
+    rescue StandardError
+      Rails.logger.debug("Failed to generate permalink for name: %p" % [name])
+      nil
     end
 
     def permalink
