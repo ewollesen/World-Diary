@@ -1,6 +1,16 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def git_revision
+    path = Rails.public_path + "git_revision.txt"
+
+    if File.exists?(path)
+      File.read(Rails.public_path + "git_revision.txt")
+    else
+      %x{git rev-parse HEAD}.chomp
+    end.slice(0..7)
+  end
+
   def title
     if content_for?(:title)
       content_for(:title) + " : World Diary"

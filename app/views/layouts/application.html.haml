@@ -93,5 +93,7 @@
               = content_for(:sidebar)
 
     %footer.text-muted.container-fluid.small
-      %p © Eric A Wollesen 2012&ndash;#{Time.now.year}
+      %p
+        © Eric A Wollesen 2012&ndash;#{Time.now.year}
+        = git_revision
     = javascript_include_tag("application")
