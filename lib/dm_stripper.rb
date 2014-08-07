@@ -51,8 +51,18 @@ module DmStripper
       else
         n.name = "span"
       end
-      n["class"] = ((n["class"] || "") + " #{tag}").strip
+      n["class"] = ((n["class"] || "") + " #{tag} #{alert_class(n, tag)}").strip
       n["markdown"] ||= "1"
     end
   end
+
+  def self.alert_class(n, tag)
+    return "" unless "div" == n.name
+    case tag
+    when "dm"; "alert alert-info"
+    when "vp"; "alert alert-warn"
+    else ""
+    end
+  end
+
 end
