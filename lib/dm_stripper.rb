@@ -9,7 +9,7 @@ module DmStripper
       modify_for_vp(text)
     else
       modify_for_user(text)
-    end.to_xml.gsub(/^&gt;(\s)/, ">\\1") # maintains markdown blockquotes
+    end.to_xml.gsub(/^(\s*)&gt;(\s)/, "\\1>\\2") # maintains blockquotes
   end
 
 
