@@ -80,12 +80,12 @@ module ApplicationHelper
     end
   end
 
-  def render_wiki(text)
+  def render_wiki(text, current_user, subject)
     dice_rolled = DiceRollParser.parse(text.strip)
     wiki_parsed = WorldWiki::WikiParser.new.parse(dice_rolled).render
     stripped = DmStripper.strip(wiki_parsed,
                                 current_user,
-                                @subject.authorized_users.include?(current_user))
+                                subject.authorized_users.include?(current_user))
 
     render_wiki_toc(text) + WdMarkdown.render(stripped)
   end

@@ -3,7 +3,7 @@
     = @subject.name
     = context_icon(@subject)
 
-= render_wiki(@subject.text)
+= render_wiki(@subject.text, current_user, @subject)
 
 .row
   .col-md-6
