@@ -74,3 +74,8 @@ table.subject-changes
 [data-sides]
   border-bottom: dashed 1px black
   cursor: pointer
+
+blockquote
+  +alert-variant(#eee, $blockquote-border-color, $text-color)
+  border: 5px solid darken($blockquote-border-color, 10%)
+  border-radius: $alert-border-radius
