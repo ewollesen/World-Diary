@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def current_user
+    super || User.new
+  end
+
   def git_revision
     path = Rails.public_path + "git_revision.txt"
 
