@@ -85,6 +85,7 @@ module ApplicationHelper
   end
 
   def render_wiki(text, current_user, subject)
+    text, @attachments = AttachmentsLister.parse(text, @attachments)
     dice_rolled = DiceRollParser.parse(text.strip)
     wiki_parsed = WorldWiki::WikiParser.new.parse(dice_rolled).render
     stripped = DmStripper.strip(wiki_parsed,
