@@ -14,9 +14,9 @@ $.fn.rollDice = ->
   @
 
 window.dxx = (sides, rolls=1, mod=0) ->
-  allRolls = (1 + wd.rand(20) for x in [1..rolls])
-  sum = allRolls.reduce (sum, roll) ->
-    sum + roll
+  allRolls = (1 + wd.rand(sides) for x in [1..rolls])
+  sum = allRolls.reduce (total, roll) ->
+    total + roll
   , mod
   [allRolls, sum]
 
