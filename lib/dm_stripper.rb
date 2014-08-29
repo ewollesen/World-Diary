@@ -20,6 +20,7 @@ module DmStripper
   def self.modify_for_dm(text)
     Nokogiri::XML::fragment(text).tap do |doc|
       process_dm(doc)
+      process_note(doc)
       process_vp(doc)
     end
   end
@@ -27,6 +28,7 @@ module DmStripper
   def self.modify_for_user(text)
     Nokogiri::XML::fragment(text).tap do |doc|
       (doc/"dm").each(&:remove)
+      (doc/"note").each(&:remove)
       (doc/"vp").each(&:remove)
     end
   end
@@ -34,12 +36,17 @@ module DmStripper
   def self.modify_for_vp(text)
     Nokogiri::XML::fragment(text).tap do |doc|
       (doc/"dm").each(&:remove)
+      process_note(doc)
       process_vp(doc)
     end
   end
 
   def self.process_dm(doc)
     process_tag("dm", doc)
+  end
+
+  def self.process_note(doc)
+    process_tag("note", doc)
   end
 
   def self.process_vp(doc)
@@ -61,6 +68,7 @@ module DmStripper
   def self.alert_class(n, tag)
     return "" unless "div" == n.name
     case tag
+    when "note"; "dm alert alert-success pull-right col-md-6 col-lg-5"
     when "dm"; "alert alert-info"
     when "vp"; "alert alert-warn"
     else ""

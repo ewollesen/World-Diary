@@ -1,0 +1,57 @@
+.page-header
+  %h1.title
+    = @note.name
+    = context_icon(@note)
+
+= render_wiki(@note.text, current_user, @note)
+
+= content_for(:title) do
+  = @note.name
+
+= content_for(:sidebar) do
+  %li
+    %h4 Changes
+    %table.note-changes
+      - if can? :manage, @note
+        %tr
+          %th Created:
+          %td
+            %span{title: @note.created_at.year}
+              = @note.created_at.to_s(:short)
+      %tr
+        %th Updated:
+        %td
+          %span{title: @note.updated_at.year}
+            = @note.updated_at.to_s(:short)
+
+- if can?(:update, Note) || can?(:destroy, Note)
+  = content_for(:sidebar) do
+    %li
+      %h4 Actions
+      %ul.nav
+        - if can?(:update, Note)
+          %li
+            = link_to(edit_note_path(@note), accesskey: "e") do
+              = fa_icon("pencil")
+              Edit
+        - if can?(:destroy, Note)
+          %li
+            = link_to(note_path(@note),
+                      :method => :delete,
+                      :class => "action-danger",
+                      :data => {:confirm => "Are you sure?"}) do
+              = fa_icon("times")
+              Delete
+
+- if signed_in? && current_user.dm?
+  = content_for(:sidebar) do
+    %li
+      %h4
+        View As…
+      %ul.nav
+        %li
+          %a{href: "#", rel: "wiki_toggle", data: {target: []}} DM
+        %li
+          %a{href: "#", rel: "wiki_toggle", data: {target: ["dm"]}} Veil pass
+        %li
+          %a{href: "#", rel: "wiki_toggle", data: {target: ["vp", "dm"]}} Anonymous

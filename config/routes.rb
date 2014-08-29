@@ -5,9 +5,8 @@ Wd::Application.routes.draw do
   resources :subjects do
     resources :comments
   end
-
+  resources :notes
   resources :veil_passes, :users
-
   resource :searches
   resources :tags
 

@@ -1,0 +1,23 @@
+.page-header
+  %h1.title Notes
+
+.row
+  - @notes.in_groups(3, false) do |group|
+    .col-md-4
+      %ol{start: 1+@notes.index(group.first).to_i}
+        = list_of(group) do |note|
+          = link_to(note) do
+            = note.name
+
+
+
+= content_for(:sidebar) do
+  - if can?(:create, Note)
+    %li
+      %h4
+        Actions
+      %ul.nav
+        %li
+          = link_to(new_note_path, accesskey: "n") do
+            = fa_icon("plus")
+            New Note

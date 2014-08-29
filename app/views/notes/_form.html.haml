@@ -1,0 +1,12 @@
+= simple_form_for(@note, wrapper: :vertical_form, html: {role: "form"}, wrapper_mappings: {select: :vertical_select, boolean: :vertical_boolean}) do |f|
+  = f.error_notification
+
+  %fieldset
+    = f.input :name
+    = f.input :text, input_html: {rows: 10}
+    - unless @note.new_record?
+      = f.input :permalink
+    = f.input :dm_only, label: "DM only"
+
+    = f.button :submit, "Update", class: "btn-primary"
+    = link_to "Cancel", @note.new_record? ? notes_path : @note, class: "btn btn-link"
