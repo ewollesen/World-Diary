@@ -1,11 +1,3 @@
-PATH
-  remote: ../world_wiki
-  specs:
-    world_wiki (0.0.7)
-      activesupport
-      redcarpet
-      treetop
-
 GIT
   remote: git://github.com/plataformatec/simple_form.git
   revision: 97c5832473588b0ad33649264de991d3f7351c59
@@ -260,6 +252,10 @@ GEM
       vlad (>= 2.1.0)
     warden (1.2.3)
       rack (>= 1.0)
+    world_wiki (0.0.8)
+      activesupport
+      redcarpet
+      treetop
     xpath (2.0.0)
       nokogiri (~> 1.3)
     yard (0.8.7.4)
@@ -313,4 +309,4 @@ DEPENDENCIES
   vlad
   vlad-assets
   vlad-git
-  world_wiki!
+  world_wiki (>= 0.0.8)
