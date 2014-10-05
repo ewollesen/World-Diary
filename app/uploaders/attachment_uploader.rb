@@ -96,7 +96,6 @@ class AttachmentUploader < CarrierWave::Uploader::Base
       end
     end
   rescue StandardError => e
-    byebug
     Rails.logger.debug("Unhandled error while detecting faces #{e.message}")
   end
 
