@@ -28,7 +28,7 @@ gem "therubyracer", :platforms => :ruby
   gem "libv8"
 gem "turbolinks"
 gem "uglifier"
-gem "world_wiki", ">= 0.0.7"
+gem "world_wiki", path: "../world_wiki" #, ">= 0.0.7"
 
 gem "jquery-rails"
 
@@ -50,6 +50,7 @@ group :development, :test do
   gem "minitest-rails-capybara", require: false
     gem "launchy"
   gem "minitest-reporters", require: false
+  gem "ruby-opencv", require: "opencv"
   gem "pry"
   gem "pry-doc"
   gem "less-rails" # am I needed in production?

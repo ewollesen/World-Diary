@@ -2,7 +2,7 @@ namespace :db do
 
   desc "Clones the production database"
   task :clone do
-    puts %x{ps xa | grep wd_development | awk '{print $1}' | xargs kill}
+    puts %x{ps xa | grep wd_development | awk '{print $1}' | xargs sudo kill}
     Rake::Task["db:drop"].invoke
     puts %x{ssh wd.xmtp.net pg_dump --create --no-owner wd_production | sed -e 's/wd_production/wd_development/g' | psql -U wd template1}
     Rake::Task["db:migrate"].invoke
