@@ -96,13 +96,13 @@ class AttachmentUploader < CarrierWave::Uploader::Base
       end
     end
   rescue StandardError => e
-    Rails.logger.debug("Unhandled error while detecting faces #{e.message}")
+    Rails.logger.info("Unhandled error while detecting faces #{e.message}")
   end
 
   def image?(attachment)
     attachment.content_type.include?("image")
   rescue StandardError => e
-    Rails.logger.debug("Not an image #{e.message}")
+    Rails.logger.info("Not an image #{e.message}")
     false
   end
 

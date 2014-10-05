@@ -21,6 +21,7 @@ gem "nokogiri"
 gem "pg"
 gem "redcarpet"
 gem "rmagick", require: "RMagick"
+gem "ruby-opencv", require: "opencv"
 gem "sass-rails"
 gem "simple_form", github: "plataformatec/simple_form"
 gem "thin"
@@ -50,7 +51,6 @@ group :development, :test do
   gem "minitest-rails-capybara", require: false
     gem "launchy"
   gem "minitest-reporters", require: false
-  gem "ruby-opencv", require: "opencv"
   gem "pry"
   gem "pry-doc"
   gem "less-rails" # am I needed in production?
