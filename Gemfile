@@ -17,6 +17,7 @@ gem "exception_notification"
 gem "font-awesome-rails"
 gem "haml-rails"
 gem "kramdown"
+gem "mustache"
 gem "nokogiri"
 gem "pg"
 gem "redcarpet"
@@ -29,7 +30,7 @@ gem "therubyracer", :platforms => :ruby
   gem "libv8"
 gem "turbolinks"
 gem "uglifier"
-gem "world_wiki", ">= 0.2.0"
+gem "world_wiki", ">= 0.2.1"
 
 gem "jquery-rails"
 
