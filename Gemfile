@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 source "https://gems.xmtp.net"
 
-gem "rails", "4.1.1"
+gem "rails", "4.1.6"
 
 gem "acts_as_commentable", "3.0.1"
 gem "acts-as-taggable-on"
