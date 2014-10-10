@@ -3,42 +3,44 @@ module DmStripper
   def self.strip(text, user, has_vp=false)
     user ||= User.new
 
-    if user.dm?
-      modify_for_dm(text)
-    elsif has_vp
-      modify_for_vp(text)
-    else
-      modify_for_user(text)
+    xml_text = XML::Document.parse(text).tap do |doc|
+      if user.dm?
+        modify_for_dm(doc)
+      elsif has_vp
+        modify_for_vp(doc)
+      else
+        modify_for_user(doc)
+      end
     end.to_xml
-      .gsub(/(\s)&amp;(\s)/, "\\1&\\2") # maintains ampersands in text
-      .gsub(/^(\s*)&gt;(\s)/, "\\1>\\2") # maintains blockquotes
+    fix_markdown_blockquotes(xml_text)
+    # to_xml will replace ampersands with entities, but if we use to_text,
+    # then it will strip HTML inserted by world_wiki or other manually
+    # installed HTML.
   end
 
 
   private
 
-  def self.modify_for_dm(text)
-    Nokogiri::XML::fragment(text).tap do |doc|
-      process_dm(doc)
-      process_note(doc)
-      process_vp(doc)
-    end
+  def self.fix_markdown_blockquotes(xml_text)
+    xml_text.gsub(/^(\s+)&gt;/, "\\1>")
   end
 
-  def self.modify_for_user(text)
-    Nokogiri::XML::fragment(text).tap do |doc|
-      (doc/"dm").each(&:remove)
-      (doc/"note").each(&:remove)
-      (doc/"vp").each(&:remove)
-    end
+  def self.modify_for_dm(doc)
+    process_dm(doc)
+    process_note(doc)
+    process_vp(doc)
   end
 
-  def self.modify_for_vp(text)
-    Nokogiri::XML::fragment(text).tap do |doc|
-      (doc/"dm").each(&:remove)
-      process_note(doc)
-      process_vp(doc)
-    end
+  def self.modify_for_user(doc)
+    doc.strip_tags("dm")
+    doc.strip_tags("note")
+    doc.strip_tags("vp")
+  end
+
+  def self.modify_for_vp(doc)
+    doc.strip_tags("dm")
+    process_note(doc)
+    process_vp(doc)
   end
 
   def self.process_dm(doc)
@@ -54,7 +56,7 @@ module DmStripper
   end
 
   def self.process_tag(tag, doc)
-    (doc/tag).each do |n|
+    doc.with_each(tag) do |n|
       if /[\r\n]/ === n
         n.name = "div"
       else

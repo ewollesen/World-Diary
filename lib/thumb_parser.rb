@@ -1,7 +1,7 @@
 module ThumbParser
 
   def self.parse(text)
-    Nokogiri::XML::fragment(text).tap do |doc|
+    XmlParser.parse(text).tap do |doc|
       process_thumbs(doc)
     end.to_xml
   end

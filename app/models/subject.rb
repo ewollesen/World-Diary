@@ -24,11 +24,12 @@ class Subject < ActiveRecord::Base
   before_save :update_anon_text, :if => :text_changed?
 
 
-  def self.lookup(name, specifier=nil)
+  def self.url_for(name)
+    lookup(name).url
+  end
+
+  def self.lookup(name)
     s = where(name: name)
-    # if specifier && self.specifier
-    #   s = s.where(:type => specifier_to_class(specifier))
-    # end
     s.first || dummy(name)
   end
 
@@ -57,11 +58,11 @@ class Subject < ActiveRecord::Base
   end
 
   def update_vp_text
-    self.vp_text = DmStripper.strip(text, nil, true)
+    self.vp_text = CGI.unescape_html(DmStripper.strip(text, nil, true))
   end
 
   def update_anon_text
-    self.anon_text = DmStripper.strip(text, nil, false)
+    self.anon_text = CGI.unescape_html(DmStripper.strip(text, nil, false))
   end
 
 end

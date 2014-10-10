@@ -9,12 +9,21 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   def test_render_wiki_smoke
-    assert_equal "<p>foo</p>\n", render_wiki("foo", @pc, @subject)
+    assert_equal "<p>foo</p>", render_wiki("foo", @pc, @subject).strip
   end
 
   def test_render_wiki_dice_roller
-    assert_equal "<p><span data-mod=\"0\" data-rolls=\"1\" data-sides=\"20\" class=\"dm\">d20</span></p>\n",
+    assert_equal "<p><span class=\"dm\" data-mod=\"0\" data-rolls=\"1\" data-sides=\"20\">d20</span></p>\n",
                  render_wiki("{d20}", @dm, @subject)
+  end
+
+  def test_render_wiki_ampersand_in_text
+    text = "Dungeons & Dragons"
+    assert_equal "<p>Dungeons &amp; Dragons</p>",
+                 render_wiki(text, @user, @subject).strip
+    text = "Dungeons &amp; Dragons"
+    assert_equal "<p>#{text}</p>",
+                 render_wiki(text, @user, @subject).strip
   end
 
   def test_render_wiki_blockquote_in_list

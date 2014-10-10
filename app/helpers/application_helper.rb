@@ -85,17 +85,32 @@ module ApplicationHelper
   end
 
   def render_wiki(text, current_user, subject)
-    text, @attachments = AttachmentsLister.parse(text, @attachments)
-    notes_inserted = NoteInserter.parse(text.strip)
-    thumbs_parsed = ThumbParser.parse(notes_inserted)
-    dice_rolled = DiceRollParser.parse(thumbs_parsed)
-    #traits_injected = NpcTraitsParser.parse(dice_rolled)
-    wiki_parsed = WorldWiki::WikiParser.new.parse(dice_rolled).render
-    stripped = DmStripper.strip(wiki_parsed,
-                                current_user,
-                                subject.authorized_users.include?(current_user))
+    has_vp = subject.authorized_users.include?(current_user)
+    is_dm = (current_user || User.new).dm?
 
-    render_wiki_toc(text) + WdMarkdown.render(stripped)
+    if is_dm
+      text = WorldWiki::WikiParser.new.parse(text).render_for_dm
+    elsif has_vp
+      text = WorldWiki::WikiParser.new.parse(text).render_for_vp
+    else
+      text = WorldWiki::WikiParser.new.parse(text).render_for_anon
+    end
+    text = DiceRollParser.parse(text)
+    text = WdMarkdown.render(text)
+    text = extract_toc_from_text(text)
+  end
+
+  def extract_toc_from_text(text)
+    Nokogiri::HTML.fragment(text).tap do |doc|
+      toc = doc.css("#markdown-toc")
+      if toc.present?
+        doc.css("#markdown-toc").remove
+        content_for(:sidebar, content_tag("h4", "Table of Contents") +
+                              content_tag("div", class: "nav-toc") do
+                      toc.to_html.html_safe
+                    end)
+      end
+    end.to_html.html_safe
   end
 
   def render_wiki_toc(text)

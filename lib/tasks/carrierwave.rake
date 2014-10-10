@@ -1,5 +1,6 @@
 namespace :carrierwave do
 
+  desc "Recreates carrierwave thumbnails"
   task :recreate_versions do
     require File.expand_path("../../config/environment", File.dirname(__FILE__))
 

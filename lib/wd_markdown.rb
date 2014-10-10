@@ -7,8 +7,12 @@ module WdMarkdown
 
   private
 
+  def self.toc
+    "\n^\n* Table of Contents\n{:toc}"
+  end
+
   def self.render_kramdown(text)
-    Kramdown::Document.new(text).to_html.html_safe
+    Kramdown::Document.new(text + toc).to_html.html_safe
   end
 
   def self.render_redcarpet(text)

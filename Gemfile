@@ -29,7 +29,7 @@ gem "therubyracer", :platforms => :ruby
   gem "libv8"
 gem "turbolinks"
 gem "uglifier"
-gem "world_wiki", ">= 0.0.8"
+gem "world_wiki", ">= 0.1.0"
 
 gem "jquery-rails"
 
@@ -53,6 +53,7 @@ group :development, :test do
   gem "minitest-reporters", require: false
   gem "pry"
   gem "pry-doc"
+  gem "pry-rails"
   gem "less-rails" # am I needed in production?
   gem "vlad", :require => false
   gem "vlad-assets", require: false
