@@ -30,7 +30,8 @@ gem "therubyracer", :platforms => :ruby
   gem "libv8"
 gem "turbolinks"
 gem "uglifier"
-gem "world_wiki", ">= 0.2.1"
+gem "world_wiki", "0.2.2"
+#gem "world_wiki", path: "../world_wiki"
 
 gem "jquery-rails"
 
