@@ -88,7 +88,7 @@ module ApplicationHelper
     has_vp = subject.authorized_users.include?(current_user)
     is_dm = (current_user || User.new).dm?
 
-    text = WorldWiki::WikiParser.new.parse(text).render
+    text = WikiParser.render(text)
     text = DiceRollParser.parse(text)
     text = PrivateStache.render(text, has_vp, is_dm)
     text = WdMarkdown.render(text)

@@ -30,8 +30,6 @@ gem "therubyracer", :platforms => :ruby
   gem "libv8"
 gem "turbolinks"
 gem "uglifier"
-gem "world_wiki", "0.2.2"
-#gem "world_wiki", path: "../world_wiki"
 
 gem "jquery-rails"
 
@@ -60,5 +58,4 @@ group :development, :test do
   gem "vlad", :require => false
   gem "vlad-assets", require: false
   gem "vlad-git", require: false
-  # gem "world_wiki", path: "../world_wiki"
 end
