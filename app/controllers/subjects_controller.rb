@@ -1,6 +1,8 @@
+# coding: utf-8
 class SubjectsController < ApplicationController
   load_resource :find_by => :permalink
   authorize_resource
+  before_filter :check_for_redirect, only: :show
   after_filter :track, :only => :show
 
 
@@ -70,6 +72,14 @@ class SubjectsController < ApplicationController
                                         :caption,
                                         :dm_only,
                                         :_destroy]})
+  end
+
+  def check_for_redirect
+    if /\Aredirect: (.+)$/ === @subject.text.strip
+      redirect_to Subject.lookup($~[1]), notice: "Redirected from “#{view_context.sanitize(@subject.name)}”".html_safe
+      logger.info("Redirecting to \"#{$~[1]}\"")
+      false
+    end
   end
 
 end
