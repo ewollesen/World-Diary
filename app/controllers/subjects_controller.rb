@@ -21,7 +21,7 @@ class SubjectsController < ApplicationController
   end
 
   def index
-    @subjects = @subjects.order("name ASC")
+    @subjects = @subjects.order("regexp_replace(name, '^(the|an?) ', '', 'i') ASC")
   end
 
   def new
