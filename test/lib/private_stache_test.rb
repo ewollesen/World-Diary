@@ -18,14 +18,17 @@ class PrivateStacheTest < ActiveSupport::TestCase
     text = "{{#dm}}You can't see me{{/dm}}"
     assert_equal "", render_anon(text)
     assert_equal "", render_vp(text)
-    assert_equal "You can't see me", render_dm(text)
+    assert_equal "<span markdown=\"1\" class=\"dm\">You can't see me</span>",
+                 render_dm(text)
   end
 
   def test_render_vp_tag
     text = "{{#vp}}You can't see me{{/vp}}"
     assert_equal "", render_anon(text)
-    assert_equal "You can't see me", render_vp(text)
-    assert_equal "You can't see me", render_dm(text)
+    assert_equal "<span markdown=\"1\" class=\"vp\">You can't see me</span>",
+                 render_vp(text)
+    assert_equal "<span markdown=\"1\" class=\"vp\">You can't see me</span>",
+                 render_dm(text)
   end
 
   def test_render_dm_para
@@ -39,9 +42,13 @@ Player's can't see it.
 Player's can see this
 EOF
     expected_dm = <<EOF
+
+<div markdown="1" class="dm alert">
 This is text that only a DM should be able to see.
 
 Player's can't see it.
+
+</div>
 
 Player's can see this
 EOF

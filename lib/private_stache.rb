@@ -8,20 +8,24 @@ module PrivateStache
 
     def classes(base, tag_name)
       [
-        base,
-        tag_name == "div" ? "alert" : "",
-        base == "vp" ? "alert-warn" : "",
-        base == "dm" ? "alert-info" : "",
-      ].compact.join(" ")
+        base.to_s,
+        tag_name.to_s == "div" ? "alert" : "",
+      ].compact.join(" ").strip
     end
 
     def render_tag(text, base)
       html = Mustache.render(text, {dm: @is_dm, vp: @has_vp})
       tag_name = /\n/ === html ? "div" : "span"
 
-      "\n<#{tag_name} markdown=\"1\" class=\"#{classes(base, tag_name)}\">" +
-        html +
-        "</#{tag_name}>\n"
+      send(tag_name, html, base)
+    end
+
+    def div(html, base)
+      "\n<div markdown=\"1\" class=\"#{classes(base, "div")}\">\n#{html}\n</div>\n"
+    end
+
+    def span(html, base)
+      "<span markdown=\"1\" class=\"#{classes(base, "span")}\">#{html}</span>"
     end
 
     def dm(text)
