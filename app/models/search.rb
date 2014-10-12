@@ -41,29 +41,49 @@ def sql(user)
 SELECT subjects.*
   FROM subjects
   WHERE subjects.id IN (
+        -- public by name
         SELECT subjects.id
           FROM subjects
-          WHERE name ILIKE '#{q}'
+          WHERE name ILIKE '#{q}' AND dm_only = 'f'
 
-        UNION
+          UNION
 
-        SELECT subjects.id
-          FROM subjects
-          WHERE anon_text ILIKE '#{q}'
+          -- public by text
+          SELECT subjects.id
+            FROM subjects
+            WHERE anon_text ILIKE '#{q}' AND dm_only = 'f'
 
-        UNION
+          UNION
 
-        SELECT subjects.id
-          FROM subjects
-          INNER JOIN veil_passes ON veil_passes.subject_id = subjects.id AND
-                     veil_passes.user_id #{vp_user_id_clause}
-          WHERE vp_text ILIKE '#{q}'
+          -- veil pass by name
+          SELECT subjects.id
+            FROM subjects
+            INNER JOIN veil_passes ON veil_passes.subject_id = subjects.id AND
+                       veil_passes.user_id #{vp_user_id_clause}
+            WHERE name ILIKE '#{q}'
 
-        UNION
+          UNION
 
-        SELECT subjects.id
-          FROM subjects
-          WHERE text ILIKE '#{q}' AND #{user.dm?}
+          -- veil pass by vp_text
+          SELECT subjects.id
+            FROM subjects
+            INNER JOIN veil_passes ON veil_passes.subject_id = subjects.id AND
+                       veil_passes.user_id #{vp_user_id_clause}
+            WHERE vp_text ILIKE '#{q}'
+
+          UNION
+
+          -- dm by name
+          SELECT subjects.id
+            FROM subjects
+            WHERE name ILIKE '#{q}' AND #{user.dm?}
+
+          UNION
+
+          -- dm by text
+          SELECT subjects.id
+            FROM subjects
+            WHERE text ILIKE '#{q}' AND #{user.dm?}
   )
 EOF
 end
