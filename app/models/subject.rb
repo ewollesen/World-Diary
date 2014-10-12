@@ -58,11 +58,11 @@ class Subject < ActiveRecord::Base
   end
 
   def update_vp_text
-    self.vp_text = CGI.unescape_html(DmStripper.strip(text, nil, true))
+    self.vp_text = PrivateStache.render(text, true, false)
   end
 
   def update_anon_text
-    self.anon_text = CGI.unescape_html(DmStripper.strip(text, nil, false))
+    self.anon_text = PrivateStache.render(text, true, true)
   end
 
 end
